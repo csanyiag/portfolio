@@ -13,8 +13,9 @@
     <nav class="sticky top-0 z-50 bg-[#0000FF] text-white px-8 py-4 flex justify-between items-center font-semibold">
         <a href="index.html" class="text-xl tracking-wide hover:opacity-80">András Gábor Csányi</a>
         <div class="flex gap-8 text-lg">
-            <a href="about.html" class="hover:opacity-60">About</a>
             <a href="graphic.html" class="hover:opacity-60">Graphic Design</a>
+            <a href="about.html" class="hover:opacity-60">About</a>
+
         </div>
     </nav>
 
@@ -25,14 +26,12 @@
             </h1>
         </header>
 
-        <!-- 1. FŐKATEGÓRIA: Character Design -->
-        <details name="3d-categories" class="group border-b border-neutral-900 transition-all">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
-                <span>Character Design</span>
-            </summary>
+<details name="3d-categories" class="group transition-all m-0 p-0">
+    <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+        <span>Character design</span>
+    </summary>
             
             <section class="w-full bg-white">
-                <!-- Alprojekt: the Devil -->
                 <details name="3d-subprojects" class="transition-all border-b border-neutral-200">
                     <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
                         <span>the Devil</span>            
@@ -58,7 +57,6 @@
                     </div>
                 </details>
 
-                <!-- Alprojekt: the Armman -->
                 <details name="3d-subprojects" class="transition-all">
                     <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
                         <span>the Armman</span>            
@@ -83,14 +81,12 @@
             </section>
         </details>
 
-        <!-- 2. FŐKATEGÓRIA: Asset Design -->
-        <details name="3d-categories" class="group border-b border-neutral-900 transition-all">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
-                <span>Asset Design</span>
-            </summary>
+<details name="3d-categories" class="group transition-all m-0 p-0">
+    <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+        <span>Asset design</span>
+    </summary>
             
             <section class="w-full bg-white">
-                <!-- Alprojekt: the Dragon Grass -->
                 <details name="3d-subprojects" class="transition-all border-b border-neutral-200">
                     <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
                         <span>the Dragon Grass</span>
@@ -105,7 +101,6 @@
                     </div>
                 </details>
 
-                <!-- Alprojekt: Folk Asset Set -->
                 <details name="3d-subprojects" class="transition-all">
                     <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
                         <span>Folk Asset Set</span>
@@ -133,11 +128,10 @@
             </section>
         </details>
 
-        <!-- 3. FŐKATEGÓRIA: Studies -->
-        <details name="3d-categories" class="group border-b border-neutral-900 transition-all">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
-                <span>Studies</span>
-            </summary>
+<details name="3d-categories" class="group transition-all m-0 p-0">
+    <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+        <span>Studies</span>
+    </summary>
             
             <section class="w-full bg-white p-6 text-black">
                 <div class="max-w-full mb-6">
@@ -179,7 +173,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const detailsElements = document.querySelectorAll("details[name='3d-categories']");
+            const detailsElements = document.querySelectorAll("details[name='3d-subprojects']");
 
             detailsElements.forEach((details) => {
                 details.addEventListener("toggle", (event) => {
