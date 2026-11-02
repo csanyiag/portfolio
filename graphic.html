@@ -14,6 +14,7 @@
             --nav-h: 2.75rem;   /* felső kék menüsáv */
             --bar-h: 2.5rem;    /* kategória-sáv (Brand Design stb.) */
             --foot-h: 2.5rem;   /* alsó, fix footer-sáv */
+            --sub-h: 2.5rem;    /* projekt-sáv (University of Pécs stb.), ez is felragad */
             --media-ratio: 1.7778;  /* a "fő" képarány (16:9) – ehhez igazodik az egységes szélesség */
             --slide-h: calc(100svh - var(--nav-h) - var(--bar-h) - var(--foot-h));
             --media-w: calc((var(--slide-h) - 1.5rem) * var(--media-ratio));
@@ -32,19 +33,54 @@
             display: flex;
             align-items: center;          /* a laposabb képek függőlegesen középre kerülnek */
             justify-content: center;
-            background: #fff;
+            background: #000;
             padding: 0.75rem;
+        }
+        /* A projekt-sáv alatti diák: a sáv helyét is levonjuk a magasságból */
+        .sub-body {
+            --slide-h: calc(100svh - var(--nav-h) - var(--bar-h) - var(--sub-h) - var(--foot-h));
+            --media-w: calc((var(--slide-h) - 1.5rem) * var(--media-ratio));
+        }
+        .sub-body .slide {
+            scroll-margin-top: var(--sub-h);
         }
         .slide-media {
             width: min(100%, var(--media-w)); /* minden kép és videó ugyanolyan széles */
             height: auto;
             display: block;
         }
+        html { background: #ffffff; }
+
+        /* Felső menüsáv: fekete, ha bármelyik kategória nyitva van */
+        nav { transition: background-color .25s; }
+        body:has(details[name="Graphic-design-categories"][open]) nav {
+            background-color: #000;
+            box-shadow: inset 0 -1px 0 rgba(255,255,255,.2);
+        }
+
+        /* Nyitott sávok: fekete, vékony elválasztóvonallal */
+        details[name="graphic-subprojects"][open] > summary { background-color: #ffffff; color: #000000; }
+
+        /* Jobb szélen + (zárva) / × (nyitva) ikon */
+        summary { -webkit-user-select: none; user-select: none; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: "+";
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1;
+            transition: transform .2s;
+        }
+        details[open] > summary::after { transform: rotate(45deg); }
+
+        /* A zárt sávok is snap-pontok, így az utolsó dia után is elérhetők */
+        details:not([open]) > summary { scroll-snap-align: start; }
+        details[name="Graphic-design-categories"] > summary { scroll-margin-top: calc(-1 * var(--bar-h)); }
     </style>
 </head>
 <body class="bg-white text-black font-sans m-0 p-0">
 
-    <nav class="sticky top-0 z-50 bg-[#0000FF] text-white px-8 h-[var(--nav-h)] flex justify-between items-center font-semibold">
+    <nav class="sticky top-0 z-50 bg-[#0000FF] text-white px-8 h-[var(--nav-h)] flex justify-between items-center font-semibold transition-colors">
         <a href="index.html" class="text-base tracking-wide hover:opacity-80">András Gábor Csányi</a>
         <div class="flex gap-6 text-base">
             <a href="3d.html" class="hover:opacity-60 transition-opacity">3D</a>
@@ -60,16 +96,16 @@
         </header>
 
         <details name="Graphic-design-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-white group-open:text-black text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
                 <span>Brand Design</span>
             </summary>
 
-            <section class="w-full bg-white m-0 p-0">
+            <section class="w-full bg-black m-0 p-0">
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
+                    <summary class="bg-white text-black text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>University of Pécs</span>
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
+                    <div class="sub-body w-full bg-black text-white m-0 p-0">
                     <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pte_brand/pte_logoanim.mp4" type="video/mp4"></video></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_3.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_21.webp" alt="Pte projekt" class="slide-media"></div>
@@ -94,10 +130,10 @@
                 </details>
 
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
+                    <summary class="bg-white text-black text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>City of Pécs</span>
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
+                    <div class="sub-body w-full bg-white text-black m-0 p-0">
                     <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pecs_brand/pecs_anim2.mp4" type="video/mp4"></video></div>
                     <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_06.webp" alt="Pecs projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_02.webp" alt="Pecs projekt" class="slide-media"></div>
@@ -128,10 +164,10 @@
                 </details>
 
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
+                    <summary class="bg-white text-black text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>Fermáta - Interactive Concert Hall</span>
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
+                    <div class="sub-body w-full bg-black text-white m-0 p-0">
                     <div class="slide"><img src="images/graphic_design/fermata/frmt.webp" alt="Fermata projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/fermata/frmt2.webp" alt="Fermata projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/fermata/frmt3.webp" alt="Fermata projekt" class="slide-media"></div>
@@ -142,7 +178,7 @@
         </details>
 
         <details name="Graphic-design-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-white group-open:text-black text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
                 <span>Poster Design</span>
             </summary>
 
@@ -156,16 +192,16 @@
         </details>
 
         <details name="Graphic-design-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-white group-open:text-black text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
                 <span>Illustration</span>
             </summary>
 
-            <section class="w-full bg-white m-0 p-0">
+            <section class="w-full bg-black m-0 p-0">
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
+                    <summary class="bg-white text-black text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>Pictos</span>
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
+                    <div class="sub-body w-full bg-black text-white m-0 p-0">
                     <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/illustrations/Devl.mp4" type="video/mp4"></video></div>
                     <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/illustrations/Threehead.mp4" type="video/mp4"></video></div>
                     <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/illustrations/Birdie.mp4" type="video/mp4"></video></div>
@@ -174,10 +210,10 @@
                 </details>
 
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
+                    <summary class="bg-white text-black text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>Egysorosok</span>
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
+                    <div class="sub-body w-full bg-black text-white m-0 p-0">
                     <div class="slide"><img src="images/graphic_design/illustrations/egysorosok.webp" alt="Egysorosok" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/illustrations/egysorosok2.webp" alt="Egysorosok" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/illustrations/egysorosok3.webp" alt="Egysorosok" class="slide-media"></div>
@@ -203,21 +239,34 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const detailsElements = document.querySelectorAll("details[name='graphic-subprojects']");
+            const root = getComputedStyle(document.documentElement);
+            const rem = parseFloat(root.fontSize);
+            const size = (name) => parseFloat(root.getPropertyValue(name)) * rem;
 
-            detailsElements.forEach((details) => {
-                details.addEventListener("toggle", () => {
-                    if (details.open) {
-                        detailsElements.forEach((other) => {
-                            if (other !== details) other.open = false;
-                        });
+            // Az elemet a megadott távolságra görgeti a képernyő tetejétől
+            const goTo = (el, offset, onlyIfAbove = false) => {
+                const top = el.getBoundingClientRect().top;
+                if (onlyIfAbove ? top >= offset - 4 : Math.abs(top - offset) <= 4) return;
+                window.scrollTo({ top: top + window.scrollY - offset, behavior: "smooth" });
+            };
 
-                        setTimeout(() => {
-                            details.scrollIntoView({ behavior: "smooth", block: "start" });
-                        }, 100);
-                    }
+            const setup = (selector, offset) => {
+                const all = document.querySelectorAll(selector);
+                all.forEach((details) => {
+                    details.addEventListener("toggle", () => {
+                        if (details.open) {
+                            all.forEach((other) => { if (other !== details) other.open = false; });
+                            requestAnimationFrame(() => goTo(details, offset()));
+                        } else if (![...all].some((d) => d.open)) {
+                            // Bezárás után, ha a sáv a képernyő teteje fölé került, visszahozzuk
+                            requestAnimationFrame(() => goTo(details, offset(), true));
+                        }
+                    });
                 });
-            });
+            };
+
+            setup("details[name='Graphic-design-categories']", () => size("--nav-h"));
+            setup("details[name='graphic-subprojects']", () => size("--nav-h") + size("--bar-h"));
         });
     </script>
 </body>
