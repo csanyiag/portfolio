@@ -9,201 +9,195 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Kanit:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nav-h: 2.75rem;   /* felső kék menüsáv */
+            --bar-h: 2.5rem;    /* kategória-sáv (Brand Design stb.) */
+            --foot-h: 2.5rem;   /* alsó, fix footer-sáv */
+            --media-ratio: 1.7778;  /* a "fő" képarány (16:9) – ehhez igazodik az egységes szélesség */
+            --slide-h: calc(100svh - var(--nav-h) - var(--bar-h) - var(--foot-h));
+            --media-w: calc((var(--slide-h) - 1.5rem) * var(--media-ratio));
+        }
+        body {
+            padding-bottom: var(--foot-h); /* a fix footer ne takarjon tartalmat */
+        }
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-padding-top: calc(var(--nav-h) + var(--bar-h));
+            scroll-behavior: smooth;
+        }
+        .slide {
+            min-height: var(--slide-h);   /* legalább a látható terület; a magasabb képnél nő */
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;          /* a laposabb képek függőlegesen középre kerülnek */
+            justify-content: center;
+            background: #fff;
+            padding: 0.75rem;
+        }
+        .slide-media {
+            width: min(100%, var(--media-w)); /* minden kép és videó ugyanolyan széles */
+            height: auto;
+            display: block;
+        }
+    </style>
 </head>
-<body class="bg-black text-white font-sans m-0 p-0">
-    
-    <nav class="sticky top-0 z-50 bg-[#0000FF] text-white px-8 py-4 flex justify-between items-center font-semibold">
-        <a href="index.html" class="text-xl tracking-wide hover:opacity-80">András Gábor Csányi</a>
-        <div class="flex gap-8 text-lg">
+<body class="bg-white text-black font-sans m-0 p-0">
+
+    <nav class="sticky top-0 z-50 bg-[#0000FF] text-white px-8 h-[var(--nav-h)] flex justify-between items-center font-semibold">
+        <a href="index.html" class="text-base tracking-wide hover:opacity-80">András Gábor Csányi</a>
+        <div class="flex gap-6 text-base">
             <a href="3d.html" class="hover:opacity-60 transition-opacity">3D</a>
             <a href="about.html" class="hover:opacity-60 transition-opacity">About</a>
         </div>
     </nav>
 
     <main class="w-full flex-grow flex flex-col justify-start bg-white text-black">
-        <header class="text-center py-20 bg-white">
+        <header class="text-center py-20 bg-white snap-start">
             <h1 class="text-5xl md:text-7xl font-bold tracking-wide text-black">
                 Graphic Design Portfolio
             </h1>
         </header>
 
         <details name="Graphic-design-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
                 <span>Brand Design</span>
             </summary>
-            
+
             <section class="w-full bg-white m-0 p-0">
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
                         <span>University of Pécs</span>
                     </summary>
                     <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
-                                <source src="images/graphic_design/pte_brand/pte_logoanim.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_3.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_2_21.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_2_2.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_2_3.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_2_1.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_2.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_4.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_5.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_6.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_7.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_8.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_8_1.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_9.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_10.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_11.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_12.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_13.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_14.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pte_brand/pte_project_15.webp" alt="Pte projekt" class="w-full h-auto block m-0 p-0"></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pte_brand/pte_logoanim.mp4" type="video/mp4"></video></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_3.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_21.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_2.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_3.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_1.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_4.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_5.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_6.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_7.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_8.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_8_1.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_9.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_10.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_11.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_12.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_13.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_14.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_15.webp" alt="Pte projekt" class="slide-media"></div>
                     </div>
                 </details>
 
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
                         <span>City of Pécs</span>
                     </summary>
                     <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
-                                <source src="images/graphic_design/pecs_brand/pecs_anim2.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_06.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_02.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        
-                        <div class="py-6 px-8 max-w-3xl mx-auto text-center space-y-4 bg-white">
-                            <p class="text-black text-lg md:text-xl font-light leading-relaxed m-0">
-                                In 2023, our team began developing a brand identity system for the city of Pécs. <br> The three of us—Eszter Kovács, Dávid Pusztai, and I - worked on the manual under the guidance of Gergely Bőhm, while typographer Oszkár Boskovitz designed the typeface for the city. The concept was developed by Eszter Hudák. <br> Below, I present a preview of the manual, which is available in its entirety at the link: https://pecs.hu/pecs-varos-arculati-kezikonyve/
-                            </p>
-                        </div>
-
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_03.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_08.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_01.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_09.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_10.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_04.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_12.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_13.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_14.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        
-                        <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
-                                <source src="images/graphic_design/pecs_brand/Pikto Final.mp4" type="video/mp4">
-                            </video>
-                        </div>
-
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_20.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_19.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_15.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_17.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-
-                        <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
-                                <source src="images/graphic_design/pecs_brand/Webpikto.mp4" type="video/mp4">
-                            </video>
-                        </div>
-
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_21.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_22.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/pecs_brand/pecs_proj_07.webp" alt="Pecs projekt" class="w-full h-auto block m-0 p-0"></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pecs_brand/pecs_anim2.mp4" type="video/mp4"></video></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_06.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_02.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide px-8">
+                        <p class="max-w-3xl text-center text-black text-lg md:text-xl font-light leading-relaxed m-0">
+                            In 2023, our team began developing a brand identity system for the city of Pécs. <br> The three of us—Eszter Kovács, Dávid Pusztai, and I - worked on the manual under the guidance of Gergely Bőhm, while typographer Oszkár Boskovitz designed the typeface for the city. The concept was developed by Eszter Hudák. <br> Below, I present a preview of the manual, which is available in its entirety at the link: <a href="https://pecs.hu/pecs-varos-arculati-kezikonyve/" target="_blank" class="underline">https://pecs.hu/pecs-varos-arculati-kezikonyve/</a>
+                        </p>
+                    </div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_03.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_08.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_01.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_09.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_10.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_04.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_12.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_13.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_14.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pecs_brand/Pikto Final.mp4" type="video/mp4"></video></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_20.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_19.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_15.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_17.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pecs_brand/Webpikto.mp4" type="video/mp4"></video></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_21.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_22.webp" alt="Pecs projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_07.webp" alt="Pecs projekt" class="slide-media"></div>
                     </div>
                 </details>
 
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
                         <span>Fermáta - Interactive Concert Hall</span>
                     </summary>
                     <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/fermata/frmt.webp" alt="Fermata projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/fermata/frmt2.webp" alt="Fermata projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/fermata/frmt3.webp" alt="Fermata projekt" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/fermata/frmt4.webp" alt="Fermata projekt" class="w-full h-auto block m-0 p-0"></div>
+                    <div class="slide"><img src="images/graphic_design/fermata/frmt.webp" alt="Fermata projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/fermata/frmt2.webp" alt="Fermata projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/fermata/frmt3.webp" alt="Fermata projekt" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/fermata/frmt4.webp" alt="Fermata projekt" class="slide-media"></div>
                     </div>
                 </details>
             </section>
         </details>
 
         <details name="Graphic-design-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
                 <span>Poster Design</span>
             </summary>
-            
+
             <section class="w-full bg-white m-0 p-0">
-                <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/poster_design/poster_design1.webp" alt="Poster design" class="w-full h-auto block m-0 p-0"></div>
-                <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/poster_design/poster_design2.webp" alt="Poster design" class="w-full h-auto block m-0 p-0"></div>
-                <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/poster_design/poster_design3.webp" alt="Poster design" class="w-full h-auto block m-0 p-0"></div>
-                <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/poster_design/poster_design4.webp" alt="Poster design" class="w-full h-auto block m-0 p-0"></div>
-                <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/poster_design/poster_design5.webp" alt="Poster design" class="w-full h-auto block m-0 p-0"></div>
+                <div class="slide"><img src="images/graphic_design/poster_design/poster_design1.webp" alt="Poster design" class="slide-media"></div>
+                <div class="slide"><img src="images/graphic_design/poster_design/poster_design2.webp" alt="Poster design" class="slide-media"></div>
+                <div class="slide"><img src="images/graphic_design/poster_design/poster_design3.webp" alt="Poster design" class="slide-media"></div>
+                <div class="slide"><img src="images/graphic_design/poster_design/poster_design4.webp" alt="Poster design" class="slide-media"></div>
+                <div class="slide"><img src="images/graphic_design/poster_design/poster_design5.webp" alt="Poster design" class="slide-media"></div>
             </section>
         </details>
 
         <details name="Graphic-design-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
                 <span>Illustration</span>
             </summary>
-            
+
             <section class="w-full bg-white m-0 p-0">
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
                         <span>Pictos</span>
                     </summary>
                     <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
-                                <source src="images/graphic_design/illustrations/Devl.mp4" type="video/mp4">
-                            </video>             
-                        </div>
-                    <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
-                                <source src="images/graphic_design/illustrations/Threehead.mp4" type="video/mp4">
-                            </video> 
-                                        <div class="w-full bg-white text-black m-0 p-0">
-                    <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
-                                <source src="images/graphic_design/illustrations/Birdie.mp4" type="video/mp4">
-                            </video>
-                                        <div class="w-full bg-white text-black m-0 p-0">
-                    <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
-                                <source src="images/graphic_design/illustrations/Doggo.mp4" type="video/mp4">
-                            </video>        
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/illustrations/Devl.mp4" type="video/mp4"></video></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/illustrations/Threehead.mp4" type="video/mp4"></video></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/illustrations/Birdie.mp4" type="video/mp4"></video></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/illustrations/Doggo.mp4" type="video/mp4"></video></div>
+                    </div>
                 </details>
 
                 <details name="graphic-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-lg md:text-xl font-bold py-2 px-8 cursor-pointer list-none flex justify-between items-center transition-colors snap-start">
                         <span>Egysorosok</span>
                     </summary>
                     <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/illustrations/egysorosok.webp" alt="Egysorosok" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/illustrations/egysorosok2.webp" alt="Egysorosok" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/illustrations/egysorosok3.webp" alt="Egysorosok" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/illustrations/egysorosok4.webp" alt="Egysorosok" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/illustrations/egysorosok5.webp" alt="Egysorosok" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/graphic_design/illustrations/egysorosok6.webp" alt="Egysorosok" class="w-full h-auto block m-0 p-0"></div>
+                    <div class="slide"><img src="images/graphic_design/illustrations/egysorosok.webp" alt="Egysorosok" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/illustrations/egysorosok2.webp" alt="Egysorosok" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/illustrations/egysorosok3.webp" alt="Egysorosok" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/illustrations/egysorosok4.webp" alt="Egysorosok" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/illustrations/egysorosok5.webp" alt="Egysorosok" class="slide-media"></div>
+                    <div class="slide"><img src="images/graphic_design/illustrations/egysorosok6.webp" alt="Egysorosok" class="slide-media"></div>
                     </div>
                 </details>
             </section>
         </details>
+
     </main>
 
-    <footer class="bg-black text-neutral-400 border-t border-neutral-900 py-6 px-8 w-full mt-auto h-auto">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div class="text-sm">&copy; 2026 András Gábor Csányi</div>
-            <div class="flex space-x-6 text-sm font-semibold">
-                <a href="https://instagram.com/csanyi.a.g" target="_blank" class="hover:text-white transition-colors">Instagram</a>
-                <a href="https://behance.net/csag09291280" target="_blank" class="hover:text-white transition-colors">Behance</a>
-                <a href="https://artstation.com/andrscsnyi" target="_blank" class="hover:text-white transition-colors">ArtStation</a>
-                <a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" class="hover:text-white transition-colors">LinkedIn</a>
-            </div>
+    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-black text-white px-8 h-[var(--foot-h)] flex justify-between items-center font-semibold text-sm">
+        <div>&copy; 2026 András Gábor Csányi</div>
+        <div class="flex gap-6">
+            <a href="https://instagram.com/csanyi.a.g" target="_blank" class="hover:opacity-60 transition-opacity">Instagram</a>
+            <a href="https://behance.net/csag09291280" target="_blank" class="hover:opacity-60 transition-opacity">Behance</a>
+            <a href="https://artstation.com/andrscsnyi" target="_blank" class="hover:opacity-60 transition-opacity">ArtStation</a>
+            <a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" class="hover:opacity-60 transition-opacity">LinkedIn</a>
         </div>
     </footer>
 
@@ -212,23 +206,14 @@
             const detailsElements = document.querySelectorAll("details[name='graphic-subprojects']");
 
             detailsElements.forEach((details) => {
-                details.addEventListener("toggle", (event) => {
+                details.addEventListener("toggle", () => {
                     if (details.open) {
                         detailsElements.forEach((other) => {
-                            if (other !== details) {
-                                other.open = false;
-                            }
+                            if (other !== details) other.open = false;
                         });
 
                         setTimeout(() => {
-                            const stickyHeaderOffset = 80; 
-                            const elementPosition = details.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - stickyHeaderOffset;
-
-                            window.scrollTo({
-                                top: offsetPosition,
-                                behavior: "smooth"
-                            });
+                            details.scrollIntoView({ behavior: "smooth", block: "start" });
                         }, 100);
                     }
                 });
