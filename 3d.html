@@ -10,16 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --nav-h: 2.75rem;   /* felső kék menüsáv */
-            --bar-h: 2.5rem;    /* kategória-sáv (Brand Design stb.) */
-            --foot-h: 2.5rem;   /* alsó, fix footer-sáv */
-            --sub-h: 2.5rem;    /* projekt-sáv (University of Pécs stb.), ez is felragad */
-            --media-ratio: 1.7778;  /* a "fő" képarány (16:9) – ehhez igazodik az egységes szélesség */
+            --nav-h: 2.75rem;   
+            --bar-h: 2.5rem;    
+            --foot-h: 2.5rem;   
+            --sub-h: 2.5rem;    
+            --media-ratio: 1.7778;  
             --slide-h: calc(100svh - var(--nav-h) - var(--bar-h) - var(--foot-h));
             --media-w: calc((var(--slide-h) - 1.5rem) * var(--media-ratio));
         }
         body {
-            padding-bottom: var(--foot-h); /* a fix footer ne takarjon tartalmat */
+            padding-bottom: var(--foot-h); 
         }
         html {
             scroll-snap-type: y mandatory;
@@ -27,15 +27,14 @@
             scroll-behavior: smooth;
         }
         .slide {
-            min-height: var(--slide-h);   /* legalább a látható terület; a magasabb képnél nő */
+            min-height: var(--slide-h);  
             scroll-snap-align: start;
             display: flex;
-            align-items: center;          /* a laposabb képek függőlegesen középre kerülnek */
+            align-items: center;          
             justify-content: center;
             background: #000;
             padding: 0.75rem;
         }
-        /* A projekt-sáv alatti diák: a sáv helyét is levonjuk a magasságból */
         .sub-body {
             --slide-h: calc(100svh - var(--nav-h) - var(--bar-h) - var(--sub-h) - var(--foot-h));
             --media-w: calc((var(--slide-h) - 1.5rem) * var(--media-ratio));
@@ -44,24 +43,21 @@
             scroll-margin-top: var(--sub-h);
         }
         .slide-media {
-            width: min(100%, var(--media-w)); /* minden kép és videó ugyanolyan széles */
+            width: min(100%, var(--media-w)); 
             height: auto;
             display: block;
         }
         html { background: #000; }
 
-        /* Felső menüsáv: fekete, ha bármelyik kategória nyitva van */
         nav { transition: background-color .25s; }
         body:has(details[name="3d-categories"][open]) nav {
             background-color: #ffffff;
             color: #000;
         }
 
-        /* Nyitott sávok: fekete, vékony elválasztóvonallal */
         details[open] > summary {  }
         details[name="3d-subprojects"][open] > summary { background-color: #000; color: #fff; }
 
-        /* Jobb szélen + (zárva) / × (nyitva) ikon */
         summary { -webkit-user-select: none; user-select: none; }
         summary::-webkit-details-marker { display: none; }
         summary::after {
@@ -73,7 +69,6 @@
         }
         details[open] > summary::after { transform: rotate(45deg); }
 
-        /* A zárt sávok is snap-pontok, így az utolsó dia után is elérhetők */
         details:not([open]) > summary { scroll-snap-align: start; }
         details[name="3d-categories"] > summary { scroll-margin-top: calc(-1 * var(--bar-h)); }
     </style>
@@ -194,7 +189,6 @@
             const rem = parseFloat(root.fontSize);
             const size = (name) => parseFloat(root.getPropertyValue(name)) * rem;
 
-            // Az elemet a megadott távolságra görgeti a képernyő tetejétől
             const goTo = (el, offset, onlyIfAbove = false) => {
                 const top = el.getBoundingClientRect().top;
                 if (onlyIfAbove ? top >= offset - 4 : Math.abs(top - offset) <= 4) return;
@@ -209,7 +203,6 @@
                             all.forEach((other) => { if (other !== details) other.open = false; });
                             requestAnimationFrame(() => goTo(details, offset()));
                         } else if (![...all].some((d) => d.open)) {
-                            // Bezárás után, ha a sáv a képernyő teteje fölé került, visszahozzuk
                             requestAnimationFrame(() => goTo(details, offset(), true));
                         }
                     });
