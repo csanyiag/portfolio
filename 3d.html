@@ -8,85 +8,155 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nav-h: 2.75rem;   /* felső kék menüsáv */
+            --bar-h: 2.5rem;    /* kategória-sáv (Brand Design stb.) */
+            --foot-h: 2.5rem;   /* alsó, fix footer-sáv */
+            --sub-h: 2.5rem;    /* projekt-sáv (University of Pécs stb.), ez is felragad */
+            --media-ratio: 1.7778;  /* a "fő" képarány (16:9) – ehhez igazodik az egységes szélesség */
+            --slide-h: calc(100svh - var(--nav-h) - var(--bar-h) - var(--foot-h));
+            --media-w: calc((var(--slide-h) - 1.5rem) * var(--media-ratio));
+        }
+        body {
+            padding-bottom: var(--foot-h); /* a fix footer ne takarjon tartalmat */
+        }
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-padding-top: calc(var(--nav-h) + var(--bar-h));
+            scroll-behavior: smooth;
+        }
+        .slide {
+            min-height: var(--slide-h);   /* legalább a látható terület; a magasabb képnél nő */
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;          /* a laposabb képek függőlegesen középre kerülnek */
+            justify-content: center;
+            background: #000;
+            padding: 0.75rem;
+        }
+        /* A projekt-sáv alatti diák: a sáv helyét is levonjuk a magasságból */
+        .sub-body {
+            --slide-h: calc(100svh - var(--nav-h) - var(--bar-h) - var(--sub-h) - var(--foot-h));
+            --media-w: calc((var(--slide-h) - 1.5rem) * var(--media-ratio));
+        }
+        .sub-body .slide {
+            scroll-margin-top: var(--sub-h);
+        }
+        .slide-media {
+            width: min(100%, var(--media-w)); /* minden kép és videó ugyanolyan széles */
+            height: auto;
+            display: block;
+        }
+        html { background: #000; }
+
+        /* Felső menüsáv: fekete, ha bármelyik kategória nyitva van */
+        nav { transition: background-color .25s; }
+        body:has(details[name="3d-categories"][open]) nav {
+            background-color: #ffffff;
+            color: #000;
+        }
+
+        /* Nyitott sávok: fekete, vékony elválasztóvonallal */
+        details[open] > summary {  }
+        details[name="3d-subprojects"][open] > summary { background-color: #000; color: #fff; }
+
+        /* Jobb szélen + (zárva) / × (nyitva) ikon */
+        summary { -webkit-user-select: none; user-select: none; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: "+";
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1;
+            transition: transform .2s;
+        }
+        details[open] > summary::after { transform: rotate(45deg); }
+
+        /* A zárt sávok is snap-pontok, így az utolsó dia után is elérhetők */
+        details:not([open]) > summary { scroll-snap-align: start; }
+        details[name="3d-categories"] > summary { scroll-margin-top: calc(-1 * var(--bar-h)); }
+    </style>
 </head>
 <body class="bg-black text-white font-sans m-0 p-0">
 
-    <nav class="sticky top-0 z-50 bg-[#0000FF] text-white px-8 py-4 flex justify-between items-center font-semibold">
-        <a href="index.html" class="text-xl tracking-wide hover:opacity-80">András Gábor Csányi</a>
-        <div class="flex gap-8 text-lg">
-            <a href="graphic.html" class="hover:opacity-60">Graphic</a>
-            <a href="about.html" class="hover:opacity-60">About</a>
-
+    <nav class="sticky top-0 z-50 bg-[#0000FF] text-white px-8 h-[var(--nav-h)] flex justify-between items-center font-semibold transition-colors">
+        <a href="index.html" class="text-base tracking-wide hover:opacity-80">András Gábor Csányi</a>
+        <div class="flex gap-6 text-base">
+            <a href="graphic.html" class="hover:opacity-60 transition-opacity">Graphic</a>
+            <a href="about.html" class="hover:opacity-60 transition-opacity">About</a>
         </div>
     </nav>
 
     <main class="w-full flex-grow flex flex-col justify-start bg-black text-white">
-        <header class="text-center py-20 bg-black">
+        <header class="text-center py-20 bg-black snap-start">
             <h1 class="text-5xl md:text-7xl font-bold tracking-wide text-white">
                 3D Portfolio
             </h1>
         </header>
 
         <details name="3d-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
                 <span>Character Design</span>
             </summary>
             
-            <section class="w-full bg-white m-0 p-0">
+            <section class="w-full bg-black m-0 p-0">
                 <details name="3d-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-black text-white text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>the Devil</span>            
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/devil/devil_project_1.webp" alt="devil projekt pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/devil/devil_project_2.webp" alt="devil projekt pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/devil/devil_project_3.webp" alt="devil projekt pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/devil/devil_project_4.webp" alt="devil projekt pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/devil/devil_project_5.webp" alt="devil projekt pic" class="w-full h-auto block m-0 p-0"></div>
+                    <div class="sub-body w-full bg-black text-white m-0 p-0">
+                        <div class="slide"><img src="images/3d/devil/devil_project_1.webp" alt="devil projekt pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/devil/devil_project_2.webp" alt="devil projekt pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/devil/devil_project_3.webp" alt="devil projekt pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/devil/devil_project_4.webp" alt="devil projekt pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/devil/devil_project_5.webp" alt="devil projekt pic" class="slide-media"></div>
                     </div>
                 </details>
 
                 <details name="3d-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-black text-white text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>the Armman</span>            
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/armman/armman_project_1.webp" alt="armman projekt pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/armman/armman_project_2.webp" alt="armman projekt pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/armman/armman_project_3.webp" alt="armman projekt pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/armman/armman_project_4.webp" alt="armman projekt pic" class="w-full h-auto block m-0 p-0"></div>
+                    <div class="sub-body w-full bg-black text-white m-0 p-0">
+                        <div class="slide"><img src="images/3d/armman/armman_project_1.webp" alt="armman projekt pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/armman/armman_project_2.webp" alt="armman projekt pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/armman/armman_project_3.webp" alt="armman projekt pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/armman/armman_project_4.webp" alt="armman projekt pic" class="slide-media"></div>
                     </div>
                 </details>
             </section>
         </details>
 
         <details name="3d-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
                 <span>Asset Design</span>
             </summary>
             
-            <section class="w-full bg-white m-0 p-0">
+            <section class="w-full bg-black m-0 p-0">
                 <details name="3d-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-black text-white text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>the Dragon Grass</span>
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/dragon_grass/dragon_frass-01.webp" alt="dragon grass pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/dragon_grass/dragon_frass-02.webp" alt="dragon grass pic" class="w-full h-auto block m-0 p-0"></div>
+                    <div class="sub-body w-full bg-black text-white m-0 p-0">
+                        <div class="slide"><img src="images/3d/dragon_grass/dragon_frass-01.webp" alt="dragon grass pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/dragon_grass/dragon_frass-02.webp" alt="dragon grass pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/dragon_grass/dragon_grass.webp" alt="dragon grass pic" class="slide-media"></div>
+
                     </div>
                 </details>
 
                 <details name="3d-subprojects" class="transition-all m-0 p-0">
-                    <summary class="bg-[#0000FF] group-open:bg-white group-open:text-black text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">
+                    <summary class="bg-black text-white text-lg md:text-xl font-bold h-[var(--sub-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors sticky top-[calc(var(--nav-h)+var(--bar-h))] z-[9]">
                         <span>Folk Asset Set</span>
                     </summary>
-                    <div class="w-full bg-white text-black m-0 p-0">
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/folk_furnitures/folk_furnitures2.webp" alt="folk furniture pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/folk_furnitures/folk_furnitures1.webp" alt="folk furniture pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/folk_furnitures/folk_furnitures3.webp" alt="folk furniture pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/folk_furnitures/folk_furnitures4.webp" alt="folk furniture pic" class="w-full h-auto block m-0 p-0"></div>
-                        <div class="w-full m-0 p-0 leading-[0]">
-                            <video autoplay loop muted playsinline class="w-full h-auto block m-0 p-0">
+                    <div class="sub-body w-full bg-black text-white m-0 p-0">
+                        <div class="slide"><img src="images/3d/folk_furnitures/folk_furnitures2.webp" alt="folk furniture pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/folk_furnitures/folk_furnitures1.webp" alt="folk furniture pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/folk_furnitures/folk_furnitures3.webp" alt="folk furniture pic" class="slide-media"></div>
+                        <div class="slide"><img src="images/3d/folk_furnitures/folk_furnitures4.webp" alt="folk furniture pic" class="slide-media"></div>
+                        <div class="slide">
+                            <video autoplay loop muted playsinline class="slide-media">
                                 <source src="images/3d/folk_furnitures/folk_furnitures.mp4" type="video/mp4">
                             </video>
                         </div>
@@ -96,56 +166,58 @@
         </details>
 
         <details name="3d-categories" class="group transition-all m-0 p-0">
-            <summary class="sticky top-14 z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-2xl md:text-4xl font-bold py-6 px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
+            <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
                 <span>Studies</span>
             </summary>
             
-            <section class="w-full bg-white m-0 p-0">
-                <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/studies/studies2.webp" alt="studies pic" class="w-full h-auto block m-0 p-0"></div>
-                <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/studies/studies1.webp" alt="studies pic" class="w-full h-auto block m-0 p-0"></div>
-                <div class="w-full m-0 p-0 leading-[0]"><img src="images/3d/studies/studies3.webp" alt="studies pic" class="w-full h-auto block m-0 p-0"></div>
+            <section class="w-full bg-black m-0 p-0">
+                <div class="slide"><img src="images/3d/studies/studies2.webp" alt="studies pic" class="slide-media"></div>
+                <div class="slide"><img src="images/3d/studies/studies1.webp" alt="studies pic" class="slide-media"></div>
+                <div class="slide"><img src="images/3d/studies/studies3.webp" alt="studies pic" class="slide-media"></div>
             </section>
         </details>
     </main>
 
-    <footer class="bg-black text-neutral-400 border-t border-neutral-900 py-6 px-8 w-full mt-auto h-auto">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div class="text-sm">&copy; 2026 András Gábor Csányi</div>
-            <div class="flex space-x-6 text-sm font-semibold">
-                <a href="https://instagram.com/csanyi.a.g" target="_blank" class="hover:text-white transition-colors">Instagram</a>
-                <a href="https://behance.net/csag09291280" target="_blank" class="hover:text-white transition-colors">Behance</a>
-                <a href="https://artstation.com/andrscsnyi" target="_blank" class="hover:text-white transition-colors">ArtStation</a>
-                <a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" class="hover:text-white transition-colors">LinkedIn</a>
-            </div>
+    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-white text-black px-8 h-[var(--foot-h)] flex justify-between items-center font-semibold text-sm">
+        <div>&copy; 2026 András Gábor Csányi</div>
+        <div class="flex gap-6">
+            <a href="https://instagram.com/csanyi.a.g" target="_blank" class="hover:opacity-60 transition-opacity">Instagram</a>
+            <a href="https://behance.net/csag09291280" target="_blank" class="hover:opacity-60 transition-opacity">Behance</a>
+            <a href="https://artstation.com/andrscsnyi" target="_blank" class="hover:opacity-60 transition-opacity">ArtStation</a>
+            <a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" class="hover:opacity-60 transition-opacity">LinkedIn</a>
         </div>
     </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const detailsElements = document.querySelectorAll("details[name='3d-subprojects']");
+            const root = getComputedStyle(document.documentElement);
+            const rem = parseFloat(root.fontSize);
+            const size = (name) => parseFloat(root.getPropertyValue(name)) * rem;
 
-            detailsElements.forEach((details) => {
-                details.addEventListener("toggle", (event) => {
-                    if (details.open) {
-                        detailsElements.forEach((other) => {
-                            if (other !== details) {
-                                other.open = false;
-                            }
-                        });
+            // Az elemet a megadott távolságra görgeti a képernyő tetejétől
+            const goTo = (el, offset, onlyIfAbove = false) => {
+                const top = el.getBoundingClientRect().top;
+                if (onlyIfAbove ? top >= offset - 4 : Math.abs(top - offset) <= 4) return;
+                window.scrollTo({ top: top + window.scrollY - offset, behavior: "smooth" });
+            };
 
-                        setTimeout(() => {
-                            const stickyHeaderOffset = 80; 
-                            const elementPosition = details.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - stickyHeaderOffset;
-
-                            window.scrollTo({
-                                top: offsetPosition,
-                                behavior: "smooth"
-                            });
-                        }, 100);
-                    }
+            const setup = (selector, offset) => {
+                const all = document.querySelectorAll(selector);
+                all.forEach((details) => {
+                    details.addEventListener("toggle", () => {
+                        if (details.open) {
+                            all.forEach((other) => { if (other !== details) other.open = false; });
+                            requestAnimationFrame(() => goTo(details, offset()));
+                        } else if (![...all].some((d) => d.open)) {
+                            // Bezárás után, ha a sáv a képernyő teteje fölé került, visszahozzuk
+                            requestAnimationFrame(() => goTo(details, offset(), true));
+                        }
+                    });
                 });
-            });
+            };
+
+            setup("details[name='3d-categories']", () => size("--nav-h"));
+            setup("details[name='3d-subprojects']", () => size("--nav-h") + size("--bar-h"));
         });
     </script>
 </body>
