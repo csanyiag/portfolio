@@ -70,6 +70,14 @@
 
         details:not([open]) > summary { scroll-snap-align: start; }
         details[name="Graphic-design-categories"] > summary { scroll-margin-top: calc(-1 * var(--bar-h)); }
+
+        .social-icon {
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        filter: brightness(0) invert(1);
+        }
+
     </style>
 </head>
 <body class="bg-white text-black font-sans m-0 p-0">
@@ -105,14 +113,16 @@
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_21.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_2.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_3.webp" alt="Pte projekt" class="slide-media"></div>
+                                        <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pte_brand/Coat Of Arms.mp4" type="video/mp4"></video></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pte_brand/Typo.mp4" type="video/mp4"></video></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_4.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_5.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_6.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_7.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_8.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_8_1.webp" alt="Pte projekt" class="slide-media"></div>
-                    <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_9.webp" alt="Pte projekt" class="slide-media"></div>
+                    <div class="slide"><video autoplay loop muted playsinline class="slide-media"><source src="images/graphic_design/pte_brand/Posters.mp4" type="video/mp4"></video></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_10.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_11.webp" alt="Pte projekt" class="slide-media"></div>
                     <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_12.webp" alt="Pte projekt" class="slide-media"></div>
@@ -241,15 +251,15 @@
 
     </main>
 
-    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-black text-white px-8 h-[var(--foot-h)] flex justify-between items-center font-semibold text-sm">
-        <div>&copy; 2026 András Gábor Csányi</div>
-        <div class="flex gap-6">
-            <a href="https://instagram.com/csanyi.a.g" target="_blank" class="hover:opacity-60 transition-opacity">Instagram</a>
-            <a href="https://behance.net/csag09291280" target="_blank" class="hover:opacity-60 transition-opacity">Behance</a>
-            <a href="https://artstation.com/andrscsnyi" target="_blank" class="hover:opacity-60 transition-opacity">ArtStation</a>
-            <a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" class="hover:opacity-60 transition-opacity">LinkedIn</a>
-        </div>
-    </footer>
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-black text-white border-t border-white/20 px-4 sm:px-8 h-[var(--foot-h)] flex justify-between items-center font-semibold text-sm">
+    <div>&copy; 2026<span class="hidden sm:inline"> András Gábor Csányi</span></div>
+    <div class="flex items-center gap-1 sm:gap-3">
+        <a href="https://instagram.com/csanyi.a.g" target="_blank" rel="noopener" aria-label="Instagram" class="flex items-center justify-center w-9 h-9 hover:opacity-60 transition-opacity"><img src="images/instagram.svg" alt="" class="social-icon"></a>
+        <a href="https://behance.net/csag09291280" target="_blank" rel="noopener" aria-label="Behance" class="flex items-center justify-center w-9 h-9 hover:opacity-60 transition-opacity"><img src="images/behance.svg" alt="" class="social-icon"></a>
+        <a href="https://artstation.com/andrscsnyi" target="_blank" rel="noopener" aria-label="ArtStation" class="flex items-center justify-center w-9 h-9 hover:opacity-60 transition-opacity"><img src="images/artstation.svg" alt="" class="social-icon"></a>
+        <a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" rel="noopener" aria-label="LinkedIn" class="flex items-center justify-center w-9 h-9 hover:opacity-60 transition-opacity"><img src="images/linkedin.svg" alt="" class="social-icon"></a>
+    </div>
+</footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {

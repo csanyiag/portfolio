@@ -71,6 +71,14 @@
 
         details:not([open]) > summary { scroll-snap-align: start; }
         details[name="3d-categories"] > summary { scroll-margin-top: calc(-1 * var(--bar-h)); }
+        
+        .social-icon {
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        filter: brightness(0);
+        }
+
     </style>
 </head>
 <body class="bg-black text-white font-sans m-0 p-0">
@@ -171,7 +179,6 @@
                 <div class="slide"><img src="images/3d/studies/studies3.webp" alt="studies pic" class="slide-media"></div>
             </section>
         </details>
-    </main>
 
             <details name="3d-categories" class="group transition-all m-0 p-0">
             <summary class="sticky top-[var(--nav-h)] z-10 bg-[#0000FF] hover:bg-black hover:text-white text-white group-open:bg-black group-open:text-white text-lg md:text-xl font-bold h-[var(--bar-h)] px-8 cursor-pointer list-none flex justify-between items-center transition-colors">        
@@ -209,16 +216,18 @@ referrerpolicy="strict-origin-when-cross-origin"
 allowfullscreen>
 </iframe>
 </div>
+<details>
+ </main>
 
-    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-white text-black px-8 h-[var(--foot-h)] flex justify-between items-center font-semibold text-sm">
-        <div>&copy; 2026 András Gábor Csányi</div>
-        <div class="flex gap-6">
-            <a href="https://instagram.com/csanyi.a.g" target="_blank" class="hover:opacity-60 transition-opacity">Instagram</a>
-            <a href="https://behance.net/csag09291280" target="_blank" class="hover:opacity-60 transition-opacity">Behance</a>
-            <a href="https://artstation.com/andrscsnyi" target="_blank" class="hover:opacity-60 transition-opacity">ArtStation</a>
-            <a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" class="hover:opacity-60 transition-opacity">LinkedIn</a>
-        </div>
-    </footer>
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-white text-black border-t border-black/20 px-4 sm:px-8 h-[var(--foot-h)] flex justify-between items-center font-semibold text-sm">
+    <div>&copy; 2026<span class="hidden sm:inline"> András Gábor Csányi</span></div>
+    <div class="flex items-center gap-1 sm:gap-3">
+        <a href="https://instagram.com/csanyi.a.g" target="_blank" rel="noopener" aria-label="Instagram" class="flex items-center justify-center w-9 h-9 hover:opacity-60 transition-opacity"><img src="images/instagram.svg" alt="" class="social-icon"></a>
+        <a href="https://behance.net/csag09291280" target="_blank" rel="noopener" aria-label="Behance" class="flex items-center justify-center w-9 h-9 hover:opacity-60 transition-opacity"><img src="images/behance.svg" alt="" class="social-icon"></a>
+        <a href="https://artstation.com/andrscsnyi" target="_blank" rel="noopener" aria-label="ArtStation" class="flex items-center justify-center w-9 h-9 hover:opacity-60 transition-opacity"><img src="images/artstation.svg" alt="" class="social-icon"></a>
+        <a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" rel="noopener" aria-label="LinkedIn" class="flex items-center justify-center w-9 h-9 hover:opacity-60 transition-opacity"><img src="images/linkedin.svg" alt="" class="social-icon"></a>
+    </div>
+</footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
