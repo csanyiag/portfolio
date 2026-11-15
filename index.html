@@ -271,12 +271,12 @@ body {
     .intro-text { font-size: 1.25rem; }
 }
 
-.project-details { scroll-snap-align: start; }
 
 .project-summary {
     position: relative;
     height: calc(100svh - var(--nav-h));
     min-height: 26rem;
+    scroll-snap-align: start;
     list-style: none;
     cursor: pointer;
     overflow: hidden;
@@ -367,25 +367,12 @@ body {
     padding-bottom: .2rem;
 }
 
-.project-cta::after {
-    display: "none";
-    font-size: 1.4rem;
-    font-weight: 800;
-    line-height: 0;
-    transition: transform .2s;
-}
-
-.project-details[open] .project-cta::after {
-    transform: rotate(45deg);
-}
-
 @media (min-width: 768px) {
     .project-text { padding: 2.5rem 3rem 3rem; }
     .project-index { top: 1.5rem; right: 2rem; }
     .project-desc { font-size: 1.125rem; }
 }
 
-/* ---------- PROJECT CONTENT ---------- */
 .project-content { background: var(--bg); }
 
 .slide {
@@ -407,19 +394,11 @@ body {
     background-color: #000000;
 }
 
-.project-details[data-project="pte"] .project-content,
-.project-details[data-project="pte"] .slide,
-.project-details[data-project="pecs"] .project-content,
-.project-details[data-project="pecs"] .slide 
-.project-details[data-project="fermata"] .project-content,
-.project-details[data-project="fermata"] .slide
-.project-details[data-project="posters"] .project-content,
-.project-details[data-project="posters"] .slide
-.project-details[data-project="pictos"] .project-content,
-.project-details[data-project="pictos"] .slide
-.project-details[data-project="egysorosok"] .project-content,
-.project-details[data-project="egysorosok"] .slide{
+.project-details:is([data-project="pte"], [data-project="pecs"], [data-project="fermata"],
+                    [data-project="posters"], [data-project="pictos"], [data-project="egysorosok"])
+:is(.project-content, .slide) {
     background-color: #FFFFFF;
+    color: #000000;
 }
 
 .about-section { scroll-snap-align: start; }
@@ -436,7 +415,12 @@ body {
     right: 1rem;
     bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
     z-index: 40;
-    transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+    transition: opacity .2s ease, transform .2s ease, visibility .2s ease, color .2s ease;
+    color: #FFFFFF;          /* sötét alapon fehér */
+}
+
+.to-top.on-light {
+    color: #000000;          /* világos alapon fekete */
 }
 
 .to-top.is-hidden {
@@ -451,11 +435,12 @@ body {
 }
 
 .to-top svg {
-    width: 3.25rem;
-    height: 3.25rem;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    width: 3.75rem;
+    height: 3.75rem;
+    overflow: visible;     
+    stroke-width: 4;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
 }
 
 .contact-section {
@@ -622,7 +607,7 @@ summary:focus-visible {
     </section>
 
     <section id="graphic" class="section-intro">
-        <div class="intro-index">01 / 02</div>
+        <div class="intro-index"></div>
         <div class="intro-body">
             <h2 class="intro-title">Graphic Design</h2>
             <p class="intro-text">Brand identities, posters and illustrations. A selection of projects where visual systems meet everyday communication.</p>
@@ -633,7 +618,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/graphic_design/pte_brand/pte_project_3.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">Graphic Design 01 / 06</div>
+            <div class="project-index">Graphic Design</div>
             <div class="project-text">
                 <span class="project-meta">2024–</span>
                 <h2 class="project-title">University of Pécs</h2>
@@ -671,7 +656,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/graphic_design/pecs_brand/pecs_proj_06.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">Graphic Design 02 / 06</div>
+            <div class="project-index">Graphic Design</div>
             <div class="project-text">
                 <span class="project-meta">2023–</span>
                 <h2 class="project-title">City of Pécs</h2>
@@ -709,7 +694,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/graphic_design/fermata/frmt.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">Graphic Design 03 / 06</div>
+            <div class="project-index">Graphic Design</div>
             <div class="project-text">
                 <span class="project-meta">2023</span>
                 <h2 class="project-title">Fermáta – Interactive Concert Hall</h2>
@@ -729,7 +714,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/graphic_design/poster_design/poster_design1.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">Graphic Design 04 / 06</div>
+            <div class="project-index">Graphic Design</div>
             <div class="project-text">
                 <span class="project-meta">Poster Design</span>
                 <h2 class="project-title">Posters</h2>
@@ -750,7 +735,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/graphic_design/illustrations/dev_2.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">Graphic Design 05 / 06</div>
+            <div class="project-index">Graphic Design</div>
             <div class="project-text">
                 <span class="project-meta">Illustration</span>
                 <h2 class="project-title">Pictos</h2>
@@ -774,7 +759,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/graphic_design/illustrations/egysorosok.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">Graphic Design 06 / 06</div>
+            <div class="project-index">Graphic Design</div>
             <div class="project-text">
                 <span class="project-meta">Illustration</span>
                 <h2 class="project-title">Egysorosok</h2>
@@ -793,7 +778,7 @@ summary:focus-visible {
     </details>
 
     <section id="3d" class="section-intro">
-        <div class="intro-index">02 / 02</div>
+        <div class="intro-index"></div>
         <div class="intro-body">
             <h2 class="intro-title">3D</h2>
             <p class="intro-text">Characters, assets and studies. 3D work built around form, material and storytelling.</p>
@@ -804,7 +789,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/3d/devil/devil_project_1.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">3D 01 / 05</div>
+            <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Character Design</span>
                 <h2 class="project-title">the Devil</h2>
@@ -825,7 +810,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/3d/armman/armman_project_1.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">3D 02 / 05</div>
+            <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Character Design</span>
                 <h2 class="project-title">the Armman</h2>
@@ -845,7 +830,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/3d/dragon_grass/dragon_frass-01.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">3D 03 / 05</div>
+            <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Asset Design</span>
                 <h2 class="project-title">the Dragon Grass</h2>
@@ -864,7 +849,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/3d/folk_furnitures/folk_furnitures2.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">3D 04 / 05</div>
+            <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Asset Design</span>
                 <h2 class="project-title">Folk Asset Set</h2>
@@ -885,7 +870,7 @@ summary:focus-visible {
         <summary class="project-summary">
             <img class="project-bg" src="images/3d/studies/studies2.webp" alt="" loading="lazy" decoding="async">
             <div class="project-shade"></div>
-            <div class="project-index">3D 05 / 05</div>
+            <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Studies</span>
                 <h2 class="project-title">3D Studies</h2>
@@ -961,8 +946,8 @@ summary:focus-visible {
             <div class="contact-email">
                 <p class="contact-label">E-mail</p>
                 <div class="email-row">
-                    <a href="mailto:ide@email.hu?subject=Hello">csanyi.a.g@email.com</a>
-                    <button type="button" id="copy-mail" data-mail="ide@email.hu">Copy</button>
+                    <a href="mailto:csanyi.a.g@email.com?subject=Hello">csanyi.a.g@email.com</a>
+                    <button type="button" id="copy-mail" data-mail="csanyi.a.g@email.com">Copy</button>
                 </div>
             </div>
 
@@ -982,8 +967,9 @@ summary:focus-visible {
 </main>
 
 <a href="#home" data-scroll id="to-top-btn" class="to-top is-hidden" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-</a>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+    <path d="M12 19V8M5 12l7-7 7 7"/>
+</svg></a>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -1014,7 +1000,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const href = link.getAttribute("href");
             if (!href || !href.startsWith("#")) return;
 
-            const target = document.querySelector(href);
+            const target = document.getElementById(href.slice(1));
             if (!target) return;
 
             event.preventDefault();
@@ -1027,6 +1013,38 @@ document.addEventListener("DOMContentLoaded", () => {
             history.replaceState(null, "", href);
         });
     });
+
+
+    /* --- felfelé nyíl: sötét alapon fehér, világos alapon fekete --- */
+    if (toTopBtn) {
+        let ticking = false;
+
+        const backgroundLuminance = () => {
+            const r = toTopBtn.getBoundingClientRect();
+            const stack = document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+            for (const el of stack) {
+                if (el === toTopBtn || toTopBtn.contains(el)) continue;
+                const m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g);
+                if (!m) continue;
+                const [R, G, B, A = 1] = m.map(Number);
+                if (A > 0.5) return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+            }
+            return 0;
+        };
+
+        const updateArrow = () => {
+            ticking = false;
+            toTopBtn.classList.toggle("on-light", backgroundLuminance() > 140);
+        };
+        const requestArrowUpdate = () => {
+            if (!ticking) { ticking = true; requestAnimationFrame(updateArrow); }
+        };
+
+        window.addEventListener("scroll", requestArrowUpdate, { passive: true });
+        window.addEventListener("resize", requestArrowUpdate);
+        document.querySelectorAll(".project-details").forEach((d) => d.addEventListener("toggle", requestArrowUpdate));
+        updateArrow();
+    }
 
     const copyButton = document.getElementById("copy-mail");
 
