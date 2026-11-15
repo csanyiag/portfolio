@@ -5,40 +5,1094 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>András Gábor Csányi - Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --accent: #ff0080;
+    --on-accent: #FFFFFF;
+    --bg: #000000;
+    --fg: #FFFFFF;
+    --muted: #ffffff;
+    --light-bg: #FFFFFF;
+    --light-fg: #000000;
+    --line: rgba(255, 255, 255, 0.2);
+    --font-main: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+    --nav-h: 2.75rem;
+    --bar-h: 3rem;
+    --media-ratio: 1.7778;
+    --slide-h: calc(100svh - var(--nav-h) - var(--bar-h));
+    --media-w: calc((var(--slide-h) - 1.5rem) * var(--media-ratio));
+}
+
+html {
+    background: var(--bg);
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: var(--nav-h);
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-main);
+}
+
+.muted { color: var(--muted); }
+.accent-text { color: var(--accent); }
+.accent-border { border: 4px solid var(--accent); }
+
+/* ---------- NAV ---------- */
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--nav-h);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .75rem;
+    font-weight: 600;
+    background: var(--bg);
+    color: var(--on-accent);
+}
+
+.nav-brand {
+    white-space: nowrap;
+    letter-spacing: .025em;
+    transition: opacity .25s ease, visibility .25s ease;
+}
+
+.nav-brand.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    white-space: nowrap;
+    font-size: .9375rem;
+}
+
+.nav-links a,
+.nav-links button {
+    transition: opacity .2s;
+}
+
+.nav-links a:hover,
+.nav-links button:hover,
+.nav-brand:not(.is-hidden):hover {
+    opacity: .6;
+}
+
+@media (min-width: 640px) {
+    .site-nav { padding: 0 2rem; }
+    .nav-links { gap: 1.5rem; font-size: 1rem; }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+    position: relative;
+    height: calc(100svh - var(--nav-h));
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+}
+
+.hero-intro {
+    position: absolute;
+    top: 1rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    z-index: 2;
+    pointer-events: none;
+    color: #fff;
+}
+
+.hero-name {
+    margin: 0;
+    font-size: clamp(1.5rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -.01em;
+    line-height: 1.05;
+}
+
+.hero-line {
+    margin: .5rem 0 0;
+    max-width: 28rem;
+    font-size: .9375rem;
+    line-height: 1.45;
+    opacity: .9;
+}
+
+.hero-scroll {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    z-index: 2;
+    text-align: center;
+    pointer-events: none;
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .8;
+}
+
+.hero-half {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 2rem;
+    color: #fff;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform .5s;
+}
+
+.hero-tint {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    mix-blend-mode: multiply;
+    transition: background-color .3s ease;
+}
+
+.hero-left { justify-content: flex-end; text-align: right; }
+.hero-right { justify-content: flex-start; text-align: left; }
+
+.hero-label {
+    position: relative;
+    z-index: 1;
+}
+
+@media (hover: hover) {
+    .hero-label {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity .3s ease, transform .3s ease;
+    }
+
+    .hero-half:hover .hero-label,
+    .hero-half:focus-visible .hero-label {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-title {
+    margin: 0;
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 700;
+    letter-spacing: .02em;
+    line-height: 1;
+}
+
+.hero-sub {
+    margin: .75rem 0 0;
+    font-size: clamp(.9rem, 1.5vw, 1.25rem);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .9;
+    font-weight: 600;
+}
+
+.hero-half:hover .hero-bg,
+.hero-half:focus-visible .hero-bg {
+    transform: scale(1.05);
+}
+
+.hero-half:hover .hero-tint,
+.hero-half:focus-visible .hero-tint {
+    background: var(--accent);
+}
+
+@media (min-width: 768px) {
+    .hero { flex-direction: row; }
+    .hero-intro { top: 1.5rem; left: 2rem; }
+}
+
+/* ---------- SECTION INTRO ---------- */
+.section-intro {
+    position: relative;
+    height: calc(100svh - var(--nav-h));
+    min-height: 26rem;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem 1.25rem;
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+.intro-index,
+.intro-foot {
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .85;
+}
+
+.intro-body { max-width: 46rem; }
+
+.intro-title {
+    margin: 0 0 1.25rem;
+    font-size: clamp(3rem, 11vw, 8rem);
+    line-height: .95;
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+
+.intro-text {
+    margin: 0;
+    max-width: 34rem;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    opacity: .9;
+}
+
+@media (min-width: 768px) {
+    .section-intro { padding: 2.5rem 3rem; }
+    .intro-text { font-size: 1.25rem; }
+}
+
+/* ---------- PROJECT CARDS ---------- */
+.project-details { scroll-snap-align: start; }
+
+.project-summary {
+    position: relative;
+    height: calc(100svh - var(--nav-h));
+    min-height: 26rem;
+    list-style: none;
+    cursor: pointer;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.project-summary::-webkit-details-marker { display: none; }
+
+.project-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--bg-pos, top center);
+    transition: transform .8s ease;
+}
+
+.project-details:not([open]) .project-summary:hover .project-bg {
+    transform: scale(1.04);
+}
+
+.project-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.15) 100%);
+}
+
+.project-index {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .85;
+}
+
+.project-text {
+    position: relative;
+    z-index: 1;
+    padding: 1.25rem 1.25rem 1.75rem;
+    max-width: 44rem;
+}
+
+.project-meta {
+    display: inline-block;
+    background: #000000;
+    color: var(--on-accent);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .3rem .6rem;
+    margin-bottom: 1rem;
+}
+
+.project-title {
+    margin: 0 0 .75rem;
+    font-size: clamp(2.25rem, 7vw, 4.5rem);
+    line-height: 1.02;
+    font-weight: 700;
+    letter-spacing: -.01em;
+}
+
+.project-desc {
+    margin: 0 0 1.5rem;
+    max-width: 34rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(255,255,255,.85);
+}
+
+.project-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    font-weight: 900;
+    border-bottom: none;
+    padding-bottom: .2rem;
+}
+
+.project-cta::after {
+    display: "none";
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 0;
+    transition: transform .2s;
+}
+
+.project-details[open] .project-cta::after {
+    transform: rotate(45deg);
+}
+
+@media (min-width: 768px) {
+    .project-text { padding: 2.5rem 3rem 3rem; }
+    .project-index { top: 1.5rem; right: 2rem; }
+    .project-desc { font-size: 1.125rem; }
+}
+
+/* ---------- PROJECT CONTENT ---------- */
+.project-content { background: var(--bg); }
+
+.slide {
+    min-height: var(--slide-h);
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    padding: .75rem;
+}
+.slide-media {
+    width: min(100%, var(--media-w));
+    height: auto;
+    display: block;
+}    
+    .project-content,
+.slide {
+    background-color: #000000;
+}
+
+.project-details[data-project="pte"] .project-content,
+.project-details[data-project="pte"] .slide,
+.project-details[data-project="pecs"] .project-content,
+.project-details[data-project="pecs"] .slide 
+.project-details[data-project="fermata"] .project-content,
+.project-details[data-project="fermata"] .slide{
+    background-color: #FFFFFF;
+}
+
+/* ---------- ABOUT ---------- */
+.about-section { scroll-snap-align: start; }
+
+/* ---------- SOCIAL ICONS + BACK TO TOP ---------- */
+.social-icon {
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    filter: brightness(0) invert(0);
+}
+
+.to-top {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 40;
+    transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+}
+
+.to-top.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.to-top:hover {
+    opacity: .85;
+    transform: translateY(-2px);
+}
+
+.to-top svg {
+    width: 3.25rem;
+    height: 3.25rem;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ---------- CONTACT ---------- */
+.contact-section {
+    min-height: calc(100svh - var(--nav-h));
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem 1.25rem;
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+.contact-index,
+.contact-footer {
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .85;
+}
+
+.contact-content {
+    width: 100%;
+    max-width: 46rem;
+    margin: auto 0;
+    padding: 4rem 0;
+}
+
+.contact-title {
+    margin: 0 0 4rem;
+    font-size: clamp(3.5rem, 11vw, 8rem);
+    line-height: .95;
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+
+.contact-label {
+    margin: 0 0 1rem;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .75;
+}
+
+.contact-email { margin-bottom: 3rem; }
+
+.email-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.email-row a {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: .3em;
+    overflow-wrap: anywhere;
+}
+
+.email-row button {
+    padding: .5rem 1rem;
+    border: 1px solid rgba(255,255,255,.7);
+    color: inherit;
+    font: inherit;
+    font-size: .875rem;
+    font-weight: 600;
+    transition: background .2s, color .2s;
+}
+
+.email-row button:hover {
+    background: white;
+    color: black;
+}
+
+.contact-social ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.contact-social a {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-weight: 600;
+    transition: opacity .2s;
+}
+
+.contact-social a:hover { opacity: .6; }
+
+.contact-footer { padding-top: 2rem; }
+
+@media (min-width: 768px) {
+    .contact-section { padding: 2.5rem 3rem; }
+}
+
+/* ---------- ACCESSIBILITY / SMALL SCREENS ---------- */
+a { color: inherit; }
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+}
+
+@media (max-width: 380px) {
+    .site-nav { padding-inline: .5rem; }
+    .nav-links { gap: .5rem; font-size: .8125rem; }
+    .nav-brand { font-size: .8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+    </style>
 </head>
-<body class="bg-black text-white m-0 p-0 overflow-hidden font-sans">
+<body>
 
-    <div class="flex flex-col md:flex-row h-screen w-screen">
-        
-        <a href="graphic.html" class="relative w-full md:w-1/2 h-1/2 md:h-full group overflow-hidden flex items-center justify-center md:justify-end cursor-pointer p-4">
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
-                 style="background-image: url(images/cover_graphic_design.webp);">
-            </div>
-            
-            <div class="absolute inset-0 bg-[#0000FF] md:bg-black/70 md:group-hover:bg-[#0000FF] mix-blend-multiply transition-colors duration-300"></div>
+<nav class="site-nav">
+    <a href="#home" data-scroll aria-label="András Gábor Csányi" id="nav-brand" class="nav-brand is-hidden">
+        <span class="hidden sm:inline">András Gábor Csányi</span>
+        <span class="sm:hidden">A. G. Csányi</span>
+    </a>
 
-            <h2 class="relative z-10 text-3xl md:text-6xl font-semibold tracking-wider text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 text-center">
-                GRAPHIC DESIGN
-            </h2>
-        </a>
-
-        <a href="3d.html" class="relative w-full md:w-1/2 h-1/2 md:h-full group overflow-hidden flex items-center justify-center md:justify-start cursor-pointer p-4">
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
-                 style="background-image: url(images/cover_3d.webp);">
-            </div>
-            
-            <div class="absolute inset-0 bg-[#0000FF] md:bg-black/60 md:group-hover:bg-[#0000FF] mix-blend-multiply transition-colors duration-300"></div>
-
-            <h2 class="relative z-10 text-3xl md:text-6xl font-semibold tracking-wider text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 text-center">
-                3D
-            </h2>
-        </a>
-
+    <div class="nav-links">
+        <a href="#graphic" data-scroll>Graphic</a>
+        <a href="#3d" data-scroll>3D</a>
+        <a href="#about" data-scroll>About</a>
+        <a href="#contact" data-scroll>Contact</a>
     </div>
+</nav>
 
+<main>
+    <section id="home" class="hero">
+        <div class="hero-intro">
+            <p class="hero-name">András Gábor Csányi</p>
+            <p class="hero-line">Graphic designer specializing in brand identity and visual communication.</p>
+        </div>
+        <a href="#graphic" data-scroll class="hero-half hero-left">
+            <div class="hero-bg" style="background-image:url(images/cover_graphic_design.webp)"></div>
+            <div class="hero-tint"></div>
+            <div class="hero-label"><h2 class="hero-title">GRAPHIC DESIGN</h2><p class="hero-sub">Brand Design &middot; Posters &middot; Illustration</p></div>
+        </a>
+        <a href="#3d" data-scroll class="hero-half hero-right">
+            <div class="hero-bg" style="background-image:url(images/cover_3d.webp)"></div>
+            <div class="hero-tint"></div>
+            <div class="hero-label"><h2 class="hero-title">3D</h2><p class="hero-sub">Characters &middot; Assets &middot; Studies</p></div>
+        </a>
+    </section>
+
+    <!-- ===== GRAPHIC DESIGN ===== -->
+    <section id="graphic" class="section-intro">
+        <div class="intro-index">01 / 02</div>
+        <div class="intro-body">
+            <h2 class="intro-title">Graphic Design</h2>
+            <p class="intro-text">Brand identities, posters and illustrations. A selection of projects where visual systems meet everyday communication.</p>
+        </div>
+    </section>
+
+    <details class="project-details" data-project="pte">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/graphic_design/pte_brand/pte_project_3.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">Graphic Design 01 / 06</div>
+            <div class="project-text">
+                <span class="project-meta">2024–</span>
+                <h2 class="project-title">University of Pécs</h2>
+                <p class="project-desc">Development and implementation of the university's new visual identity, design of print and digital communication materials, publications, and institutional brand applications.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/pte_brand/pte_logoanim.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_3.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_21.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_2.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2_3.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/pte_brand/Coat%20Of%20Arms.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_2.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/pte_brand/Typo.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_4.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_5.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_6.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_7.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_8.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_8_1.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/pte_brand/Posters.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_10.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_11.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_12.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_13.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_14.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pte_brand/pte_project_15.webp" alt="Pte projekt" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="pecs">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/graphic_design/pecs_brand/pecs_proj_06.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">Graphic Design 02 / 06</div>
+            <div class="project-text">
+                <span class="project-meta">2023–</span>
+                <h2 class="project-title">City of Pécs</h2>
+                <p class="project-desc">Renewal of Pécs's visual identity, development of the visual identity system and its applications, as well as design of print and digital communication materials.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/pecs_brand/pecs_anim2.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_06.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_02.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><p class="max-w-3xl text-center text-lg md:text-xl font-light leading-relaxed m-0 px-4">In 2023, our team began developing a brand identity system for the city of Pécs. <br> The three of us—Eszter Kovács, Dávid Pusztai, and I - worked on the manual under the guidance of Gergely Bőhm, while typographer Oszkár Boskovitz designed the typeface for the city. The concept was developed by Eszter Hudák. <br> Below, I present a preview of the manual, which is available in its entirety at the link: <a href="https://pecs.hu/pecs-varos-arculati-kezikonyve/" target="_blank" rel="noopener" class="underline">https://pecs.hu/pecs-varos-arculati-kezikonyve/</a></p></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_03.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_08.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_01.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_09.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_10.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_04.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_12.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_13.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_14.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/pecs_brand/Pikto%20Final.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_20.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_19.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_15.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_17.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/pecs_brand/Webpikto.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_21.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_22.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/pecs_brand/pecs_proj_07.webp" alt="Pecs projekt" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="fermata">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/graphic_design/fermata/frmt.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">Graphic Design 03 / 06</div>
+            <div class="project-text">
+                <span class="project-meta">2023</span>
+                <h2 class="project-title">Fermáta – Interactive Concert Hall</h2>
+                <p class="project-desc">Development of the visual identity and creation of related animated illustrations.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><img src="images/graphic_design/fermata/frmt.webp" alt="Fermata projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/fermata/frmt2.webp" alt="Fermata projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/fermata/frmt3.webp" alt="Fermata projekt" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/fermata/frmt4.webp" alt="Fermata projekt" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="posters">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/graphic_design/poster_design/poster_design1.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">Graphic Design 04 / 06</div>
+            <div class="project-text">
+                <span class="project-meta">Poster Design</span>
+                <h2 class="project-title">Posters</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><img src="images/graphic_design/poster_design/poster_design1.webp" alt="Poster design" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/poster_design/poster_design2.webp" alt="Poster design" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/poster_design/poster_design3.webp" alt="Poster design" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/poster_design/poster_design4.webp" alt="Poster design" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/poster_design/poster_design5.webp" alt="Poster design" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="pictos">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/graphic_design/illustrations/dev_2.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">Graphic Design 05 / 06</div>
+            <div class="project-text">
+                <span class="project-meta">Illustration</span>
+                <h2 class="project-title">Pictos</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/illustrations/Devl.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/dev_2.webp" alt="Pictos" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/illustrations/Threehead.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/head_2.webp" alt="Pictos" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/illustrations/Birdie.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/kik_2.webp" alt="Pictos" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/graphic_design/illustrations/Doggo.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/dog_2.webp" alt="Pictos" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="egysorosok">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/graphic_design/illustrations/egysorosok.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">Graphic Design 06 / 06</div>
+            <div class="project-text">
+                <span class="project-meta">Illustration</span>
+                <h2 class="project-title">Egysorosok</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><img src="images/graphic_design/illustrations/egysorosok.webp" alt="Egysorosok" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/egysorosok2.webp" alt="Egysorosok" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/egysorosok3.webp" alt="Egysorosok" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/egysorosok4.webp" alt="Egysorosok" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/egysorosok5.webp" alt="Egysorosok" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/graphic_design/illustrations/egysorosok6.webp" alt="Egysorosok" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <!-- ===== 3D ===== -->
+    <section id="3d" class="section-intro">
+        <div class="intro-index">02 / 02</div>
+        <div class="intro-body">
+            <h2 class="intro-title">3D</h2>
+            <p class="intro-text">Characters, assets and studies. 3D work built around form, material and storytelling.</p>
+        </div>
+    </section>
+
+    <details class="project-details" data-project="devil">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/3d/devil/devil_project_1.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">3D 01 / 05</div>
+            <div class="project-text">
+                <span class="project-meta">Character Design</span>
+                <h2 class="project-title">the Devil</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><img src="images/3d/devil/devil_project_1.webp" alt="devil projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/devil/devil_project_2.webp" alt="devil projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/devil/devil_project_3.webp" alt="devil projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/devil/devil_project_4.webp" alt="devil projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/devil/devil_project_5.webp" alt="devil projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="armman">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/3d/armman/armman_project_1.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">3D 02 / 05</div>
+            <div class="project-text">
+                <span class="project-meta">Character Design</span>
+                <h2 class="project-title">the Armman</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><img src="images/3d/armman/armman_project_1.webp" alt="armman projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/armman/armman_project_2.webp" alt="armman projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/armman/armman_project_3.webp" alt="armman projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/armman/armman_project_4.webp" alt="armman projekt pic" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="dragongrass">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/3d/dragon_grass/dragon_frass-01.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">3D 03 / 05</div>
+            <div class="project-text">
+                <span class="project-meta">Asset Design</span>
+                <h2 class="project-title">the Dragon Grass</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><img src="images/3d/dragon_grass/dragon_frass-01.webp" alt="dragon grass pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/dragon_grass/dragon_frass-02.webp" alt="dragon grass pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/dragon_grass/dragon_grass.webp" alt="dragon grass pic" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="folk">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/3d/folk_furnitures/folk_furnitures2.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">3D 04 / 05</div>
+            <div class="project-text">
+                <span class="project-meta">Asset Design</span>
+                <h2 class="project-title">Folk Asset Set</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><img src="images/3d/folk_furnitures/folk_furnitures2.webp" alt="folk furniture pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/folk_furnitures/folk_furnitures1.webp" alt="folk furniture pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/folk_furnitures/folk_furnitures3.webp" alt="folk furniture pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/folk_furnitures/folk_furnitures4.webp" alt="folk furniture pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/3d/folk_furnitures/folk_furnitures.mp4" type="video/mp4"></video></div>
+        </div>
+    </details>
+
+    <details class="project-details" data-project="studies">
+        <summary class="project-summary">
+            <img class="project-bg" src="images/3d/studies/studies2.webp" alt="" loading="lazy" decoding="async">
+            <div class="project-shade"></div>
+            <div class="project-index">3D 05 / 05</div>
+            <div class="project-text">
+                <span class="project-meta">Studies</span>
+                <h2 class="project-title">3D Studies</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><img src="images/3d/studies/studies2.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/studies/studies1.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/studies/studies3.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="about-section max-w-5xl mx-auto px-6 py-16 space-y-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+            <div class="md:col-span-1">
+                <div class="accent-border p-2 w-full">
+                    <img src="images/profile_pic.webp" alt="András Gábor Csányi" class="w-full h-auto grayscale block" loading="lazy">
+                </div>
+            </div>
+            <div class="md:col-span-2 space-y-6">
+                <h1 class="text-3xl md:text-4xl font-bold accent-text tracking-wide">ABOUT ME</h1>
+                <p class="leading-relaxed" style="color:#d4d4d4">A graphic designer specializing in brand identity and visual communication. My work focuses on creating coherent, aesthetically pleasing, and functional systems. During my studies at the University of Pécs, I gained extensive design experience, including visual identity, typography, editorial and digital design, animation, and 3D design. I am particularly interested in projects that utilize the visual form of cross-linguistic communication one that helps interpret the environment and where I can apply design tools to solve problems.</p>
+            </div>
+        </div>
+
+        <section class="space-y-8">
+            <h2 class="text-2xl font-bold accent-text tracking-wide">PROFESSIONAL EXPERIENCE</h2>
+            <div class="space-y-6 text-sm md:text-base">
+                <div><h3 class="font-bold">2026 – RGB Pro</h3><p class="muted">Professional Jury Member, Creative Design Award</p></div>
+                <div><h3 class="font-bold">2024– – University of Pécs</h3><p class="muted"></p></div>
+                <div><h3 class="font-bold">2023– – City of Pécs</h3><p class="muted"></p></div>
+                <div><h3 class="font-bold">2023 – Fermáta – Interactive Concert Hall</h3><p class="muted"></p></div>
+                <div><h3 class="font-bold">2022 – Kistehén Band</h3><p class="muted"></p></div>
+                <div><h3 class="font-bold">2017–2018 – Gorsium High School and Art High School</h3><p class="muted">Part-time Lecturer in Graphic Design</p></div>
+                <div><h3 class="font-bold">2016–2017 – MagICS Ltd.</h3><p class="muted">Digital Printing Operator</p></div>
+            </div>
+        </section>
+
+        <section class="space-y-8">
+            <h2 class="text-2xl font-bold accent-text tracking-wide">SELECTED EXHIBITIONS</h2>
+            <div class="space-y-6 text-sm md:text-base">
+                <div><h3 class="font-bold">2026</h3><p class="muted">25th Graphic Design Biennial – Hungarian University of Fine Arts, Budapest</p><p class="muted">Arany Rajzszög – Pesti Vigadó, Budapest</p></div>
+                <div><h3 class="font-bold">2024</h3><p class="muted">24th Graphic Design Biennial – Hungarian University of Fine Arts, Budapest</p><p class="muted">Diploma Exhibition – Csontváry Museum, Pécs</p></div>
+                <div><h3 class="font-bold">2023</h3><p class="muted">Pécs Arca (Pécs City Visual Identity) – I Love Pécs Café, Pécs</p><p class="muted">Arany Rajzszög – Moholy-Nagy University of Art and Design, Budapest</p><p class="muted">Posters From Around the World – m21 Gallery, Pécs</p><p class="muted">"Ablakok" – Senta, Serbia</p><p class="muted">EGYSZERTÍZ – Nádor Gallery, Pécs &amp; FUGA Architecture Center, Budapest</p></div>
+                <div><h3 class="font-bold">2021</h3><p class="muted">Ampersand - International Logo Exhibition – Budapest, Hungary</p><p class="muted">"Ajtók" – Senta, Serbia</p></div>
+            </div>
+        </section>
+
+        <section class="space-y-8">
+            <h2 class="text-2xl font-bold accent-text tracking-wide">PROFESSIONAL AWARDS</h2>
+            <div class="space-y-6 text-sm md:text-base">
+                <div><h3 class="font-bold">2025</h3><p class="muted">RGB Creative Design Black Award - Grand Prize – University of Pécs Visual Identity</p><p class="muted">RGB Creative Design Red Award – University of Pécs Visual Identity</p><p class="muted">Los Angeles Short Film Awards – Angel-maker short film</p></div>
+                <div><h3 class="font-bold">2024</h3><p class="muted">Arany Rajzszög Award – Pécs City Visual Identity</p><p class="muted">City Marketing Diamond Award – Pécs City Visual Identity</p></div>
+            </div>
+        </section>
+
+        <section class="space-y-8">
+            <h2 class="text-2xl font-bold accent-text tracking-wide">SELECTED PROFESSIONAL PUBLICATIONS</h2>
+            <div class="space-y-6 text-sm md:text-base">
+                <div><p class="muted">"Thoughtfulness down to the smallest detail is very important" – Interview, Kreatív Magazine, online publication.</p><p class="muted">8th ArtHungry Award Catalogue, 2025</p><p class="muted">PTE Grafika, 2025</p><p class="muted">Posters from around the world, 2023</p><p class="muted">Art and Monument Protection in Senta, 2011-2021, 2022</p><p class="muted">36th National Scientific Students' Associations Conference, Arts and Art Theory Section – Ruslan and Ludmilla - Animated Artwork</p></div>
+            </div>
+        </section>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="contact-section">
+        <div class="contact-index"></div>
+
+        <div class="contact-content">
+            <h2 class="contact-title">Contact</h2>
+
+            <div class="contact-email">
+                <p class="contact-label">E-mail</p>
+                <div class="email-row">
+                    <a href="mailto:ide@email.hu?subject=Hello">csanyi.a.g@email.com</a>
+                    <button type="button" id="copy-mail" data-mail="ide@email.hu">Copy</button>
+                </div>
+            </div>
+
+            <div class="contact-social">
+                <p class="contact-label">Social</p>
+                <ul>
+                    <li><a href="https://instagram.com/csanyi.a.g" target="_blank" rel="noopener"><img class="social-icon" src="images/instagram.svg" alt="" aria-hidden="true">Instagram</a></li>
+                    <li><a href="https://behance.net/csag09291280" target="_blank" rel="noopener"><img class="social-icon" src="images/behance.svg" alt="" aria-hidden="true">Behance</a></li>
+                    <li><a href="https://artstation.com/andrscsnyi" target="_blank" rel="noopener"><img class="social-icon" src="images/artstation.svg" alt="" aria-hidden="true">ArtStation</a></li>
+                    <li><a href="https://linkedin.com/in/andrás-gábor-csányi-2a02a4317" target="_blank" rel="noopener"><img class="social-icon" src="images/linkedin.svg" alt="" aria-hidden="true">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="contact-footer">András Gábor Csányi · Portfolio</div>
+    </section>
+</main>
+
+<a href="#home" data-scroll id="to-top-btn" class="to-top is-hidden" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</a>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    /* --- Navigation visibility --- */
+    const heroSection = document.getElementById("home");
+    const navBrand = document.getElementById("nav-brand");
+    const toTopBtn = document.getElementById("to-top-btn");
+
+    if (heroSection) {
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const isHeroVisible = entry.isIntersecting;
+
+                if (navBrand) {
+                    navBrand.classList.toggle("is-hidden", isHeroVisible);
+                }
+
+                if (toTopBtn) {
+                    toTopBtn.classList.toggle("is-hidden", isHeroVisible);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        heroObserver.observe(heroSection);
+    }
+
+    /* --- Smooth scrolling --- */
+    document.querySelectorAll("[data-scroll]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const href = link.getAttribute("href");
+            if (!href || !href.startsWith("#")) return;
+
+            const target = document.querySelector(href);
+            if (!target) return;
+
+            event.preventDefault();
+
+            target.scrollIntoView({
+                behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+                block: "start"
+            });
+
+            history.replaceState(null, "", href);
+        });
+    });
+
+    /* --- Copy email --- */
+    const copyButton = document.getElementById("copy-mail");
+
+    if (copyButton) {
+        copyButton.addEventListener("click", async () => {
+            const email = copyButton.dataset.mail;
+            if (!email) return;
+
+            try {
+                await navigator.clipboard.writeText(email);
+                const originalText = copyButton.textContent;
+                copyButton.textContent = "Copied!";
+
+                window.setTimeout(() => {
+                    copyButton.textContent = originalText || "Copy";
+                }, 1500);
+            } catch (error) {
+                console.error("Could not copy email:", error);
+                copyButton.textContent = "Copy failed";
+                window.setTimeout(() => {
+                    copyButton.textContent = "Copy";
+                }, 1500);
+            }
+        });
+    }
+
+    /* --- Video playback observer --- */
+    if ("IntersectionObserver" in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.play().catch(() => {});
+                } else {
+                    entry.target.pause();
+                }
+            });
+        }, { threshold: 0.25 });
+
+        document.querySelectorAll("video").forEach((video) => {
+            videoObserver.observe(video);
+        });
+    }
+
+    /* --- Project accordion --- */
+    document.querySelectorAll(".project-details").forEach((details) => {
+        details.addEventListener("toggle", () => {
+            if (details.open) {
+                requestAnimationFrame(() => {
+                    details.scrollIntoView({
+                        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+                        block: "start"
+                    });
+                });
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
