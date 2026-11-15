@@ -46,7 +46,6 @@ body {
 .accent-text { color: var(--accent); }
 .accent-border { border: 4px solid var(--accent); }
 
-/* ---------- NAV ---------- */
 .site-nav {
     position: sticky;
     top: 0;
@@ -97,7 +96,6 @@ body {
     .nav-links { gap: 1.5rem; font-size: 1rem; }
 }
 
-/* ---------- HERO ---------- */
 .hero {
     position: relative;
     height: calc(100svh - var(--nav-h));
@@ -228,7 +226,6 @@ body {
     .hero-intro { top: 1.5rem; left: 2rem; }
 }
 
-/* ---------- SECTION INTRO ---------- */
 .section-intro {
     position: relative;
     height: calc(100svh - var(--nav-h));
@@ -274,7 +271,6 @@ body {
     .intro-text { font-size: 1.25rem; }
 }
 
-/* ---------- PROJECT CARDS ---------- */
 .project-details { scroll-snap-align: start; }
 
 .project-summary {
@@ -416,14 +412,18 @@ body {
 .project-details[data-project="pecs"] .project-content,
 .project-details[data-project="pecs"] .slide 
 .project-details[data-project="fermata"] .project-content,
-.project-details[data-project="fermata"] .slide{
+.project-details[data-project="fermata"] .slide
+.project-details[data-project="posters"] .project-content,
+.project-details[data-project="posters"] .slide
+.project-details[data-project="pictos"] .project-content,
+.project-details[data-project="pictos"] .slide
+.project-details[data-project="egysorosok"] .project-content,
+.project-details[data-project="egysorosok"] .slide{
     background-color: #FFFFFF;
 }
 
-/* ---------- ABOUT ---------- */
 .about-section { scroll-snap-align: start; }
 
-/* ---------- SOCIAL ICONS + BACK TO TOP ---------- */
 .social-icon {
     display: block;
     width: 1.25rem;
@@ -458,7 +458,6 @@ body {
     stroke-linejoin: round;
 }
 
-/* ---------- CONTACT ---------- */
 .contact-section {
     min-height: calc(100svh - var(--nav-h));
     scroll-snap-align: start;
@@ -560,7 +559,6 @@ body {
     .contact-section { padding: 2.5rem 3rem; }
 }
 
-/* ---------- ACCESSIBILITY / SMALL SCREENS ---------- */
 a { color: inherit; }
 
 a:focus-visible,
@@ -623,7 +621,6 @@ summary:focus-visible {
         </a>
     </section>
 
-    <!-- ===== GRAPHIC DESIGN ===== -->
     <section id="graphic" class="section-intro">
         <div class="intro-index">01 / 02</div>
         <div class="intro-body">
@@ -795,7 +792,6 @@ summary:focus-visible {
         </div>
     </details>
 
-    <!-- ===== 3D ===== -->
     <section id="3d" class="section-intro">
         <div class="intro-index">02 / 02</div>
         <div class="intro-body">
@@ -904,7 +900,6 @@ summary:focus-visible {
         </div>
     </details>
 
-    <!-- ===== ABOUT ===== -->
     <section id="about" class="about-section max-w-5xl mx-auto px-6 py-16 space-y-16">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
             <div class="md:col-span-1">
@@ -957,7 +952,6 @@ summary:focus-visible {
         </section>
     </section>
 
-    <!-- ===== CONTACT ===== -->
     <section id="contact" class="contact-section">
         <div class="contact-index"></div>
 
@@ -993,7 +987,6 @@ summary:focus-visible {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    /* --- Navigation visibility --- */
     const heroSection = document.getElementById("home");
     const navBrand = document.getElementById("nav-brand");
     const toTopBtn = document.getElementById("to-top-btn");
@@ -1016,7 +1009,6 @@ document.addEventListener("DOMContentLoaded", () => {
         heroObserver.observe(heroSection);
     }
 
-    /* --- Smooth scrolling --- */
     document.querySelectorAll("[data-scroll]").forEach((link) => {
         link.addEventListener("click", (event) => {
             const href = link.getAttribute("href");
@@ -1036,7 +1028,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    /* --- Copy email --- */
     const copyButton = document.getElementById("copy-mail");
 
     if (copyButton) {
@@ -1062,7 +1053,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* --- Video playback observer --- */
     if ("IntersectionObserver" in window) {
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
@@ -1079,7 +1069,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* --- Project accordion --- */
     document.querySelectorAll(".project-details").forEach((details) => {
         details.addEventListener("toggle", () => {
             if (details.open) {
