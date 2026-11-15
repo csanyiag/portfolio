@@ -11,8 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
     <style>
 :root {
-    --accent: #520079;
-    --on-accent: #FFFFFF;
+    --accent: #4D70FF;
+    --on-accent: #000000;
     --bg: #000000;
     --fg: #FFFFFF;
     --muted: #ffffff;
@@ -57,7 +57,7 @@ body {
     padding: 0 .75rem;
     font-weight: 600;
     background: var(--bg);
-    color: var(--on-accent);
+    color: var(--fg);
 }
 
 .nav-brand {
@@ -333,7 +333,7 @@ body {
 .project-meta {
     display: inline-block;
     background: #000000;
-    color: var(--on-accent);
+    color: var(--fg);
     font-size: .75rem;
     font-weight: 700;
     letter-spacing: .1em;
@@ -506,7 +506,7 @@ body {
 
 .email-row button {
     padding: .5rem 1rem;
-    border: 1px solid rgba(255,255,255,.7);
+    border: 1px solid currentColor;
     color: inherit;
     font: inherit;
     font-size: .875rem;
@@ -571,6 +571,28 @@ summary:focus-visible {
     }
 }
     </style>
+    <script>
+    /* Véletlen fő szín: minden frissítéskor / új belépéskor változik, egy oldalon belül (menüzés közben) nem. */
+    (function () {
+        const palette = ["#BE31FF", "#4D70FF", "#FF008C", "#FF2D2D", "#08BD77", "#E05A00"];
+
+        let last = null;
+        try { last = localStorage.getItem("accent"); } catch (e) {}
+        const pool = palette.filter((c) => c !== last);          // ne legyen kétszer egymás után ugyanaz
+        const pick = pool.length ? pool[Math.floor(Math.random() * pool.length)] : palette[0];
+        try { localStorage.setItem("accent", pick); } catch (e) {}
+
+        // a rajta lévő szöveg színe: amelyik (fekete vagy fehér) jobb kontrasztot ad
+        const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+        const [r, g, b] = [1, 3, 5].map((i) => parseInt(pick.slice(i, i + 2), 16));
+        const L = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+        const onAccent = 1.05 / (L + 0.05) > (L + 0.05) / 0.05 ? "#FFFFFF" : "#000000";
+
+        const root = document.documentElement.style;
+        root.setProperty("--accent", pick);
+        root.setProperty("--on-accent", onAccent);
+    })();
+    </script>
 </head>
 <body>
 
@@ -785,6 +807,30 @@ summary:focus-visible {
         </div>
     </section>
 
+    <details class="project-details" data-project="studies">
+        <summary class="project-summary">
+<video class="project-bg"
+       poster="images/3d/studies/studie47.webp"
+       muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="images/3d/studies/Study_46.mp4" type="video/mp4">
+</video>            <div class="project-shade"></div>
+            <div class="project-index">3D</div>
+            <div class="project-text">
+                <span class="project-meta">Studies</span>
+                <h2 class="project-title">3D Studies</h2>
+                <p class="project-desc">Short project description goes here.</p>
+                <span class="project-cta">View project</span>
+            </div>
+        </summary>
+        <div class="project-content">
+            <div class="slide"><video class="slide-media" muted loop playsinline preload="metadata"><source src="images/3d/studies/Study_46.mp4" type="video/mp4"></video></div>
+            <div class="slide"><img src="images/3d/studies/studie47.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/studies/studies2.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/studies/studies1.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
+            <div class="slide"><img src="images/3d/studies/studies3.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
+        </div>
+    </details>
+
     <details class="project-details" data-project="devil">
         <summary class="project-summary">
             <img class="project-bg" src="images/3d/devil/devil_project_1.webp" alt="" loading="lazy" decoding="async">
@@ -847,8 +893,11 @@ summary:focus-visible {
 
     <details class="project-details" data-project="folk">
         <summary class="project-summary">
-            <img class="project-bg" src="images/3d/folk_furnitures/folk_furnitures2.webp" alt="" loading="lazy" decoding="async">
-            <div class="project-shade"></div>
+<video class="project-bg"
+       poster="images/3d/folk_furnitures/folk_furnitures2.webp"
+       muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="images/3d/folk_furnitures/folk_furnitures.mp4" type="video/mp4">
+</video>            <div class="project-shade"></div>
             <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Asset Design</span>
@@ -866,24 +915,6 @@ summary:focus-visible {
         </div>
     </details>
 
-    <details class="project-details" data-project="studies">
-        <summary class="project-summary">
-            <img class="project-bg" src="images/3d/studies/studies2.webp" alt="" loading="lazy" decoding="async">
-            <div class="project-shade"></div>
-            <div class="project-index">3D</div>
-            <div class="project-text">
-                <span class="project-meta">Studies</span>
-                <h2 class="project-title">3D Studies</h2>
-                <p class="project-desc">Short project description goes here.</p>
-                <span class="project-cta">View project</span>
-            </div>
-        </summary>
-        <div class="project-content">
-            <div class="slide"><img src="images/3d/studies/studies2.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
-            <div class="slide"><img src="images/3d/studies/studies1.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
-            <div class="slide"><img src="images/3d/studies/studies3.webp" alt="studies pic" class="slide-media" loading="lazy" decoding="async"></div>
-        </div>
-    </details>
 
     <section id="about" class="about-section max-w-5xl mx-auto px-6 py-16 space-y-16">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
@@ -1019,6 +1050,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (toTopBtn) {
         let ticking = false;
 
+        const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+
         const backgroundLuminance = () => {
             const r = toTopBtn.getBoundingClientRect();
             const stack = document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2);
@@ -1027,14 +1060,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 const m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g);
                 if (!m) continue;
                 const [R, G, B, A = 1] = m.map(Number);
-                if (A > 0.5) return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+                if (A > 0.5) return 0.2126 * lin(R) + 0.7152 * lin(G) + 0.0722 * lin(B);
             }
             return 0;
         };
 
         const updateArrow = () => {
             ticking = false;
-            toTopBtn.classList.toggle("on-light", backgroundLuminance() > 140);
+            toTopBtn.classList.toggle("on-light", backgroundLuminance() > 0.179);
         };
         const requestArrowUpdate = () => {
             if (!ticking) { ticking = true; requestAnimationFrame(updateArrow); }
