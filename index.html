@@ -416,11 +416,11 @@ body {
     bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
     z-index: 40;
     transition: opacity .2s ease, transform .2s ease, visibility .2s ease, color .2s ease;
-    color: #FFFFFF;          /* sötét alapon fehér */
+    color: #FFFFFF;         
 }
 
 .to-top.on-light {
-    color: #000000;          /* világos alapon fekete */
+    color: #000000;         
 }
 
 .to-top.is-hidden {
@@ -572,17 +572,15 @@ summary:focus-visible {
 }
     </style>
     <script>
-    /* Véletlen fő szín: minden frissítéskor / új belépéskor változik, egy oldalon belül (menüzés közben) nem. */
     (function () {
         const palette = ["#BE31FF", "#4D70FF", "#FF008C", "#FF2D2D", "#08BD77", "#E05A00"];
 
         let last = null;
         try { last = localStorage.getItem("accent"); } catch (e) {}
-        const pool = palette.filter((c) => c !== last);          // ne legyen kétszer egymás után ugyanaz
+        const pool = palette.filter((c) => c !== last);          
         const pick = pool.length ? pool[Math.floor(Math.random() * pool.length)] : palette[0];
         try { localStorage.setItem("accent", pick); } catch (e) {}
 
-        // a rajta lévő szöveg színe: amelyik (fekete vagy fehér) jobb kontrasztot ad
         const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
         const [r, g, b] = [1, 3, 5].map((i) => parseInt(pick.slice(i, i + 2), 16));
         const L = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
@@ -740,7 +738,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Poster Design</span>
                 <h2 class="project-title">Posters</h2>
-                <p class="project-desc">Short project description goes here.</p>
+                <p class="project-desc">Some of my poster designs, created for various projects, or applications.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -761,7 +759,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Illustration</span>
                 <h2 class="project-title">Pictos</h2>
-                <p class="project-desc">Short project description goes here.</p>
+                <p class="project-desc">I've created this icons for my 3D character modeling projects.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -785,7 +783,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Illustration</span>
                 <h2 class="project-title">Egysorosok</h2>
-                <p class="project-desc">Short project description goes here.</p>
+                <p class="project-desc">Selected illustrations for Sándor Weöres's one line poems.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -803,7 +801,7 @@ summary:focus-visible {
         <div class="intro-index"></div>
         <div class="intro-body">
             <h2 class="intro-title">3D</h2>
-            <p class="intro-text">Characters, assets and studies. 3D work built around form, material and storytelling.</p>
+            <p class="intro-text">Characters, assets and studies. 3D work built around form, material and storytelling, mostly made in Autodesk Maya, Znrush, Adobe Substance Painter, and Unreal Engine.</p>
         </div>
     </section>
 
@@ -813,12 +811,13 @@ summary:focus-visible {
        poster="images/3d/studies/studie47.webp"
        muted loop playsinline preload="metadata" aria-hidden="true">
     <source src="images/3d/studies/study_46.mp4" type="video/mp4">
-</video>            <div class="project-shade"></div>
+</video>            
+<div class="project-shade"></div>
             <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Studies</span>
                 <h2 class="project-title">3D Studies</h2>
-                <p class="project-desc">Short project description goes here.</p>
+                <p class="project-desc">Studies and experiments in 3D modeling, and sculpting.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -839,7 +838,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Character Design</span>
                 <h2 class="project-title">the Devil</h2>
-                <p class="project-desc">Short project description goes here.</p>
+                <p class="project-desc">In Hungarian folklore, the figure of the devil is generally identical to, or identified with, that of the “wandering student”—and as such, he loves music very much; if people treat the traveler well and do not harm him, they may even be rewarded, but if they do not, they may come to a bad end.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -859,8 +858,8 @@ summary:focus-visible {
             <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Character Design</span>
-                <h2 class="project-title">the Armman</h2>
-                <p class="project-desc">Short project description goes here.</p>
+                <h2 class="project-title">the Battlebird</h2>
+                <p class="project-desc">This character was inspired by Souls-like games; he’s a sort of mini-boss who’s essentially a chopped-up version of a typical giant knight, so he moves like a massive armored bird. His rigging is still a work in progress, but that’s worth another post—or an update to this one.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -880,7 +879,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Asset Design</span>
                 <h2 class="project-title">the Dragon Grass</h2>
-                <p class="project-desc">Short project description goes here.</p>
+                <p class="project-desc"> or "Sárkányfű" is a tool that appears in Hungarian fairy tales and is used to ward off dragons. Of course, it is presented as a medicinal herb there, but I wondered what kind of tincture could be made from it. I further developed one of my earlier digital painting sketches into a label illustration, mainly as an experiment with materials and textures. My goal was to achieve certain printing technology effects and their aging on the label at the same time.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -902,7 +901,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Asset Design</span>
                 <h2 class="project-title">Folk Asset Set</h2>
-                <p class="project-desc">Short project description goes here.</p>
+                <p class="project-desc">Some game-ready assets made in Autodesk Maya, Zbrush, for Unreal Engine, inspired by the Hungarian rural craft production.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -1046,7 +1045,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* --- felfelé nyíl: sötét alapon fehér, világos alapon fekete --- */
     if (toTopBtn) {
         let ticking = false;
 
