@@ -85,12 +85,6 @@ body {
     transition: opacity .2s;
 }
 
-.nav-links a:hover,
-.nav-links button:hover,
-.nav-brand:not(.is-hidden):hover {
-    opacity: .6;
-}
-
 @media (min-width: 640px) {
     .site-nav { padding: 0 2rem; }
     .nav-links { gap: 1.5rem; font-size: 1rem; }
@@ -211,16 +205,6 @@ body {
     font-weight: 600;
 }
 
-.hero-half:hover .hero-bg,
-.hero-half:focus-visible .hero-bg {
-    transform: scale(1.05);
-}
-
-.hero-half:hover .hero-tint,
-.hero-half:focus-visible .hero-tint {
-    background: var(--accent);
-}
-
 @media (min-width: 768px) {
     .hero { flex-direction: row; }
     .hero-intro { top: 1.5rem; left: 2rem; }
@@ -299,10 +283,6 @@ body {
     object-fit: cover;
     object-position: var(--bg-pos, top center);
     transition: transform .8s ease;
-}
-
-.project-details:not([open]) .project-summary:hover .project-bg {
-    transform: scale(1.04);
 }
 
 .project-shade {
@@ -401,8 +381,110 @@ body {
     color: #000000;
 }
 
-.about-section { scroll-snap-align: start; }
+.about-section {
+    height: calc(100svh - var(--nav-h));
+    min-height: 26rem;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0 1rem;
+    background: var(--bg);
+    color: var(--fg);
+}
 
+.about-top,
+.about-bottom {
+    flex: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.25rem;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+.about-top { margin-bottom: .75rem; }
+.about-bottom { margin-top: .75rem; }
+
+.about-arrows { display: flex; gap: .25rem; }
+.about-arrow {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid currentColor;
+    color: inherit;
+    transition: opacity .2s;
+}
+.about-arrow:disabled { opacity: .3; cursor: default; }
+.about-arrow svg { width: 1rem; height: 1rem; stroke: currentColor; stroke-width: 3; fill: none; stroke-linecap: square; }
+
+.about-dots { display: flex; }
+.about-dot { width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; color: inherit; }
+.about-dot::before { content: ""; width: .5rem; height: .5rem; border: 1px solid currentColor; }
+.about-dot.is-active::before { background: var(--accent); border-color: var(--accent); }
+
+.about-track {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    outline: none;
+}
+.about-track::-webkit-scrollbar { display: none; }
+
+.about-panel {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;               /* ha egy panel mégis magasabb, benne görgethető */
+    padding: 0 1.25rem;
+    scrollbar-width: none;
+}
+.about-panel::-webkit-scrollbar { display: none; }
+.about-inner { width: 100%; max-width: 46rem; margin: auto 0; padding: .5rem 0 1rem; }
+.about-inner.wide { max-width: 64rem; }
+
+.about-title {
+    margin: 0 0 1.25rem;
+    font-size: clamp(2.5rem, 9vw, 6rem);
+    line-height: .95;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    color: var(--accent);
+}
+.about-title.xl { font-size: clamp(3.5rem, 11vw, 8rem); }   /* az első panelen akkora, mint a Contact címe */
+
+.about-intro { display: grid; gap: 1.25rem; align-items: center; }
+.about-photo { width: 40%; max-width: 12rem; border: 4px solid var(--accent); padding: .5rem; }
+.about-photo img { display: block; width: 100%; height: auto; max-height: 28svh; object-fit: cover; filter: grayscale(1); }
+.about-bio { margin: 0; max-width: 38rem; font-size: 1.0625rem; line-height: 1.6; opacity: .88; }
+
+.about-list { display: block; }
+.about-entry { break-inside: avoid; margin: 0 0 1.25rem; }
+.about-entry h3 { margin: 0 0 .15rem; font-size: 1rem; font-weight: 700; }
+.about-entry p { margin: 0 0 .25rem; font-size: .9375rem; line-height: 1.5; opacity: .78; }
+
+@media (min-width: 768px) {
+    .about-section { padding: 2.5rem 0 1.5rem; }
+    .about-top, .about-bottom, .about-panel { padding-left: 3rem; padding-right: 3rem; }
+    .about-intro { grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); gap: 3rem; }
+    .about-photo { width: auto; max-width: none; }
+    .about-photo img { max-height: 55svh; }
+    .about-entry p { font-size: 1rem; }
+}
+@media (min-width: 900px) {
+    .about-list.cols { column-count: 2; column-gap: 3rem; }   /* két oszlop, hogy kisebb legyen a magasság */
+}
 .social-icon {
     display: block;
     width: 1.25rem;
@@ -416,22 +498,17 @@ body {
     bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
     z-index: 40;
     transition: opacity .2s ease, transform .2s ease, visibility .2s ease, color .2s ease;
-    color: #FFFFFF;         
+    color: #FFFFFF;          
 }
 
 .to-top.on-light {
-    color: #000000;         
+    color: #000000;          
 }
 
 .to-top.is-hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-}
-
-.to-top:hover {
-    opacity: .85;
-    transform: translateY(-2px);
 }
 
 .to-top svg {
@@ -514,11 +591,6 @@ body {
     transition: background .2s, color .2s;
 }
 
-.email-row button:hover {
-    background: white;
-    color: black;
-}
-
 .contact-social ul {
     display: flex;
     flex-wrap: wrap;
@@ -536,7 +608,6 @@ body {
     transition: opacity .2s;
 }
 
-.contact-social a:hover { opacity: .6; }
 
 .contact-footer { padding-top: 2rem; }
 
@@ -558,6 +629,186 @@ summary:focus-visible {
     .nav-links { gap: .5rem; font-size: .8125rem; }
     .nav-brand { font-size: .8rem; }
 }
+
+
+.project-details[open] > .project-summary {
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 30;
+    height: var(--bar-h);
+    min-height: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1rem;
+    background: #000000;
+    color: #FFFFFF;
+    scroll-snap-align: none;
+}
+.project-details[open] > .project-summary .project-bg,
+.project-details[open] > .project-summary .project-shade,
+.project-details[open] > .project-summary .project-index,
+.project-details[open] > .project-summary .project-desc,
+.project-details[open] > .project-summary .project-cta { display: none; }
+
+.project-details[open] > .project-summary .project-text {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+.project-details[open] > .project-summary .project-meta,
+.project-details[open] > .project-summary .project-title {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.project-details[open] > .project-summary .project-meta { display: none; }
+
+.project-details[open] > .project-summary .project-title {
+    margin: 0;
+    min-width: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+    .project-details[open] > .project-summary { padding: 0 2rem; }
+    .project-details[open] > .project-summary .project-title { font-size: 1.125rem; }
+}
+@media (max-width: 480px) {
+    .project-details[open] > .project-summary .project-meta { display: none; }   
+}
+.project-content .slide { scroll-margin-top: var(--bar-h); }
+
+@media (max-width: 767px) {
+    html { scroll-snap-type: y proximity; }              
+    .slide { min-height: 0; padding: 0 0 .25rem; scroll-snap-align: none; }
+    .slide-media { width: 100%; }
+    .slide > p { padding: 2rem 1.25rem; }                
+}
+
+.project-content img.slide-media { cursor: zoom-in; }
+.project-content img.slide-media:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+html.lb-open { overflow: hidden; }
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0,0,0,.96);
+    color: #fff;
+}
+.lightbox[hidden] { display: none; }
+
+.lb-bar {
+    flex: none;
+    height: var(--nav-h);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    font-size: .875rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+}
+.lb-close {
+    font-size: 2rem;
+    line-height: 1;
+    transform: rotate(45deg);
+    padding: .25rem .6rem;
+    margin-right: -.6rem;
+    color: inherit;
+    transition: opacity .2s;
+}
+
+.lb-track {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    outline: none;
+}
+.lb-track::-webkit-scrollbar { display: none; }
+.lightbox.is-zoomed .lb-track { overflow-x: hidden; }    
+
+.lb-item {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    overflow: auto;
+    overscroll-behavior: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lb-item img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100svh - var(--nav-h));
+    object-fit: contain;
+    cursor: zoom-in;
+}
+.lb-item.zoomed { display: block; }                      
+.lb-item.zoomed img { width: 220%; max-width: none; max-height: none; height: auto; cursor: zoom-out; }
+
+.lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: rgba(0,0,0,.35);
+    transition: opacity .2s;
+}
+.lb-nav svg { width: 1.5rem; height: 1.5rem; stroke: currentColor; stroke-width: 3; fill: none; stroke-linecap: square; }
+.lb-prev { left: .5rem; }
+.lb-next { right: .5rem; }
+@media (hover: none) { .lb-nav { display: none; } }      
+.lightbox.is-zoomed .lb-nav { display: none; }
+
+
+@media (hover: hover) {
+    .nav-links a:hover,
+    .nav-links button:hover,
+    .nav-brand:not(.is-hidden):hover { opacity: .6; }
+
+    .hero-half:hover .hero-bg,
+    .hero-half:focus-visible .hero-bg { transform: scale(1.05); }
+    .hero-half:hover .hero-tint,
+    .hero-half:focus-visible .hero-tint { background: var(--accent); }
+
+    .project-details:not([open]) .project-summary:hover .project-bg { transform: scale(1.04); }
+    .to-top:hover { opacity: .85; transform: translateY(-2px); }
+    .email-row button:hover { background: white; color: black; }
+    .contact-social a:hover { opacity: .6; }
+    .lb-close:hover { opacity: .6; }
+    .lb-nav:hover { opacity: .7; }
+}
+a, button, summary { touch-action: manipulation; }
 
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -642,7 +893,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">2024–</span>
                 <h2 class="project-title">University of Pécs</h2>
-                <p class="project-desc">Development and implementation of the university's new visual identity, design of print and digital communication materials, publications, and institutional brand applications.</p>
+                <p class="project-desc">Selected illustrations for Sándor Weöres's one line poems.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -738,7 +989,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Poster Design</span>
                 <h2 class="project-title">Posters</h2>
-                <p class="project-desc">Some of my poster designs, created for various projects, or applications.</p>
+                <p class="project-desc">Short project description goes here.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -759,7 +1010,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Illustration</span>
                 <h2 class="project-title">Pictos</h2>
-                <p class="project-desc">I've created this icons for my 3D character modeling projects.</p>
+                <p class="project-desc">Short project description goes here.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -783,7 +1034,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Illustration</span>
                 <h2 class="project-title">Egysorosok</h2>
-                <p class="project-desc">Selected illustrations for Sándor Weöres's one line poems.</p>
+                <p class="project-desc">Short project description goes here.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -801,7 +1052,7 @@ summary:focus-visible {
         <div class="intro-index"></div>
         <div class="intro-body">
             <h2 class="intro-title">3D</h2>
-            <p class="intro-text">Characters, assets and studies. 3D work built around form, material and storytelling, mostly made in Autodesk Maya, Znrush, Adobe Substance Painter, and Unreal Engine.</p>
+            <p class="intro-text">Characters, assets and studies. 3D work built around form, material and storytelling, mostly made in Autodesk Maya, ZBrush, Adobe Substance Painter, and Unreal Engine.</p>
         </div>
     </section>
 
@@ -811,8 +1062,7 @@ summary:focus-visible {
        poster="images/3d/studies/studie47.webp"
        muted loop playsinline preload="metadata" aria-hidden="true">
     <source src="images/3d/studies/study_46.mp4" type="video/mp4">
-</video>            
-<div class="project-shade"></div>
+</video>            <div class="project-shade"></div>
             <div class="project-index">3D</div>
             <div class="project-text">
                 <span class="project-meta">Studies</span>
@@ -879,7 +1129,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Asset Design</span>
                 <h2 class="project-title">the Dragon Grass</h2>
-                <p class="project-desc"> or "Sárkányfű" is a tool that appears in Hungarian fairy tales and is used to ward off dragons. Of course, it is presented as a medicinal herb there, but I wondered what kind of tincture could be made from it. I further developed one of my earlier digital painting sketches into a label illustration, mainly as an experiment with materials and textures. My goal was to achieve certain printing technology effects and their aging on the label at the same time.</p>
+                <p class="project-desc">or "Sárkányfű" is a tool that appears in Hungarian fairy tales and is used to ward off dragons. Of course, it is presented as a medicinal herb there, but I wondered what kind of tincture could be made from it. I further developed one of my earlier digital painting sketches into a label illustration, mainly as an experiment with materials and textures. My goal was to achieve certain printing technology effects and their aging on the label at the same time.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -901,7 +1151,7 @@ summary:focus-visible {
             <div class="project-text">
                 <span class="project-meta">Asset Design</span>
                 <h2 class="project-title">Folk Asset Set</h2>
-                <p class="project-desc">Some game-ready assets made in Autodesk Maya, Zbrush, for Unreal Engine, inspired by the Hungarian rural craft production.</p>
+                <p class="project-desc">Some game-ready assets made in Autodesk Maya, ZBrush, for Unreal Engine, inspired by the Hungarian rural craft production.</p>
                 <span class="project-cta">View project</span>
             </div>
         </summary>
@@ -915,56 +1165,93 @@ summary:focus-visible {
     </details>
 
 
-    <section id="about" class="about-section max-w-5xl mx-auto px-6 py-16 space-y-16">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-            <div class="md:col-span-1">
-                <div class="accent-border p-2 w-full">
-                    <img src="images/profile_pic.webp" alt="András Gábor Csányi" class="w-full h-auto grayscale block" loading="lazy">
-                </div>
-            </div>
-            <div class="md:col-span-2 space-y-6">
-                <h1 class="text-3xl md:text-4xl font-bold accent-text tracking-wide">ABOUT ME</h1>
-                <p class="leading-relaxed" style="color:#d4d4d4">A graphic designer specializing in brand identity and visual communication. My work focuses on creating coherent, aesthetically pleasing, and functional systems. During my studies at the University of Pécs, I gained extensive design experience, including visual identity, typography, editorial and digital design, animation, and 3D design. I am particularly interested in projects that utilize the visual form of cross-linguistic communication one that helps interpret the environment and where I can apply design tools to solve problems.</p>
+     <section id="about" class="about-section" aria-label="About">
+        <div class="about-top">
+            <span id="about-count">01 / 05</span>
+            <div class="about-arrows">
+                <button type="button" id="about-prev" class="about-arrow" aria-label="Previous"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l-8 8 8 8"/></svg></button>
+                <button type="button" id="about-next" class="about-arrow" aria-label="Next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
             </div>
         </div>
 
-        <section class="space-y-8">
-            <h2 class="text-2xl font-bold accent-text tracking-wide">PROFESSIONAL EXPERIENCE</h2>
-            <div class="space-y-6 text-sm md:text-base">
-                <div><h3 class="font-bold">2026 – RGB Pro</h3><p class="muted">Professional Jury Member, Creative Design Award</p></div>
-                <div><h3 class="font-bold">2024– – University of Pécs</h3><p class="muted"></p></div>
-                <div><h3 class="font-bold">2023– – City of Pécs</h3><p class="muted"></p></div>
-                <div><h3 class="font-bold">2023 – Fermáta – Interactive Concert Hall</h3><p class="muted"></p></div>
-                <div><h3 class="font-bold">2022 – Kistehén Band</h3><p class="muted"></p></div>
-                <div><h3 class="font-bold">2017–2018 – Gorsium High School and Art High School</h3><p class="muted">Part-time Lecturer in Graphic Design</p></div>
-                <div><h3 class="font-bold">2016–2017 – MagICS Ltd.</h3><p class="muted">Digital Printing Operator</p></div>
-            </div>
-        </section>
+        <div id="about-track" class="about-track" tabindex="0" aria-label="About, swipe sideways">
 
-        <section class="space-y-8">
-            <h2 class="text-2xl font-bold accent-text tracking-wide">SELECTED EXHIBITIONS</h2>
-            <div class="space-y-6 text-sm md:text-base">
-                <div><h3 class="font-bold">2026</h3><p class="muted">25th Graphic Design Biennial – Hungarian University of Fine Arts, Budapest</p><p class="muted">Arany Rajzszög – Pesti Vigadó, Budapest</p></div>
-                <div><h3 class="font-bold">2024</h3><p class="muted">24th Graphic Design Biennial – Hungarian University of Fine Arts, Budapest</p><p class="muted">Diploma Exhibition – Csontváry Museum, Pécs</p></div>
-                <div><h3 class="font-bold">2023</h3><p class="muted">Pécs Arca (Pécs City Visual Identity) – I Love Pécs Café, Pécs</p><p class="muted">Arany Rajzszög – Moholy-Nagy University of Art and Design, Budapest</p><p class="muted">Posters From Around the World – m21 Gallery, Pécs</p><p class="muted">"Ablakok" – Senta, Serbia</p><p class="muted">EGYSZERTÍZ – Nádor Gallery, Pécs &amp; FUGA Architecture Center, Budapest</p></div>
-                <div><h3 class="font-bold">2021</h3><p class="muted">Ampersand - International Logo Exhibition – Budapest, Hungary</p><p class="muted">"Ajtók" – Senta, Serbia</p></div>
-            </div>
-        </section>
+            <article class="about-panel">
+                <div class="about-inner wide">
+                    <div class="about-intro">
+                        <div class="about-photo"><img src="images/profile_pic.webp" alt="András Gábor Csányi" loading="lazy"></div>
+                        <div>
+                            <h2 class="about-title xl">About</h2>
+                            <p class="about-bio">A graphic designer specializing in brand identity and visual communication. My work focuses on creating coherent, aesthetically pleasing, and functional systems. During my studies at the University of Pécs, I gained extensive design experience, including visual identity, typography, editorial and digital design, animation, and 3D design. I am particularly interested in projects that utilize the visual form of cross-linguistic communication one that helps interpret the environment and where I can apply design tools to solve problems.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
 
-        <section class="space-y-8">
-            <h2 class="text-2xl font-bold accent-text tracking-wide">PROFESSIONAL AWARDS</h2>
-            <div class="space-y-6 text-sm md:text-base">
-                <div><h3 class="font-bold">2025</h3><p class="muted">RGB Creative Design Black Award - Grand Prize – University of Pécs Visual Identity</p><p class="muted">RGB Creative Design Red Award – University of Pécs Visual Identity</p><p class="muted">Los Angeles Short Film Awards – Angel-maker short film</p></div>
-                <div><h3 class="font-bold">2024</h3><p class="muted">Arany Rajzszög Award – Pécs City Visual Identity</p><p class="muted">City Marketing Diamond Award – Pécs City Visual Identity</p></div>
-            </div>
-        </section>
+            <article class="about-panel">
+                <div class="about-inner wide">
+                    <h2 class="about-title">Experience</h2>
+                    <div class="about-list cols">
+                        <div class="about-entry"><h3>2026 – RGB Pro</h3><p>Professional Jury Member, Creative Design Award</p></div>
+                        <div class="about-entry"><h3>2024– – University of Pécs</h3></div>
+                        <div class="about-entry"><h3>2023– – City of Pécs</h3></div>
+                        <div class="about-entry"><h3>2023 – Fermáta – Interactive Concert Hall</h3></div>
+                        <div class="about-entry"><h3>2022 – Kistehén Band</h3></div>
+                        <div class="about-entry"><h3>2017–2018 – Gorsium High School and Art High School</h3><p>Part-time Lecturer in Graphic Design</p></div>
+                        <div class="about-entry"><h3>2016–2017 – MagICS Ltd.</h3><p>Digital Printing Operator</p></div>
+                    </div>
+                </div>
+            </article>
 
-        <section class="space-y-8">
-            <h2 class="text-2xl font-bold accent-text tracking-wide">SELECTED PROFESSIONAL PUBLICATIONS</h2>
-            <div class="space-y-6 text-sm md:text-base">
-                <div><p class="muted">"Thoughtfulness down to the smallest detail is very important" – Interview, Kreatív Magazine, online publication.</p><p class="muted">8th ArtHungry Award Catalogue, 2025</p><p class="muted">PTE Grafika, 2025</p><p class="muted">Posters from around the world, 2023</p><p class="muted">Art and Monument Protection in Senta, 2011-2021, 2022</p><p class="muted">36th National Scientific Students' Associations Conference, Arts and Art Theory Section – Ruslan and Ludmilla - Animated Artwork</p></div>
+            <article class="about-panel">
+                <div class="about-inner wide">
+                    <h2 class="about-title">Exhibitions</h2>
+                    <div class="about-list cols">
+                        <div class="about-entry"><h3>2026</h3><p>25th Graphic Design Biennial – Hungarian University of Fine Arts, Budapest</p><p>Arany Rajzszög – Pesti Vigadó, Budapest</p></div>
+                        <div class="about-entry"><h3>2024</h3><p>24th Graphic Design Biennial – Hungarian University of Fine Arts, Budapest</p><p>Diploma Exhibition – Csontváry Museum, Pécs</p></div>
+                        <div class="about-entry"><h3>2023</h3><p>Pécs Arca (Pécs City Visual Identity) – I Love Pécs Café, Pécs</p><p>Arany Rajzszög – Moholy-Nagy University of Art and Design, Budapest</p><p>Posters From Around the World – m21 Gallery, Pécs</p><p>"Ablakok" – Senta, Serbia</p><p>EGYSZERTÍZ – Nádor Gallery, Pécs &amp; FUGA Architecture Center, Budapest</p></div>
+                        <div class="about-entry"><h3>2021</h3><p>Ampersand - International Logo Exhibition – Budapest, Hungary</p><p>"Ajtók" – Senta, Serbia</p></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="about-panel">
+                <div class="about-inner">
+                    <h2 class="about-title">Awards</h2>
+                    <div class="about-list">
+                        <div class="about-entry"><h3>2025</h3><p>RGB Creative Design Black Award - Grand Prize – University of Pécs Visual Identity</p><p>RGB Creative Design Red Award – University of Pécs Visual Identity</p><p>Los Angeles Short Film Awards – Angel-maker short film</p></div>
+                        <div class="about-entry"><h3>2024</h3><p>Arany Rajzszög Award – Pécs City Visual Identity</p><p>City Marketing Diamond Award – Pécs City Visual Identity</p></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="about-panel">
+                <div class="about-inner">
+                    <h2 class="about-title">Publications</h2>
+                    <div class="about-list">
+                        <div class="about-entry">
+                            <p>"Thoughtfulness down to the smallest detail is very important" – Interview, Kreatív Magazine, online publication.</p>
+                            <p>8th ArtHungry Award Catalogue, 2025</p>
+                            <p>PTE Grafika, 2025</p>
+                            <p>Posters from around the world, 2023</p>
+                            <p>Art and Monument Protection in Senta, 2011-2021, 2022</p>
+                            <p>36th National Scientific Students' Associations Conference, Arts and Art Theory Section – Ruslan and Ludmilla - Animated Artwork</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <div class="about-bottom">
+            <div class="about-dots">
+                <button type="button" class="about-dot" aria-label="Go to part 1"></button>
+                <button type="button" class="about-dot" aria-label="Go to part 2"></button>
+                <button type="button" class="about-dot" aria-label="Go to part 3"></button>
+                <button type="button" class="about-dot" aria-label="Go to part 4"></button>
+                <button type="button" class="about-dot" aria-label="Go to part 5"></button>
             </div>
-        </section>
+        </div>
     </section>
 
     <section id="contact" class="contact-section">
@@ -1001,6 +1288,16 @@ summary:focus-visible {
     <path d="M12 19V8M5 12l7-7 7 7"/>
 </svg></a>
 
+<div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lb-bar">
+        <span id="lb-count"></span>
+        <button type="button" id="lb-close" class="lb-close" aria-label="Close image viewer">+</button>
+    </div>
+    <div id="lb-track" class="lb-track" tabindex="0"></div>
+    <button type="button" id="lb-prev" class="lb-nav lb-prev" aria-label="Previous image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l-8 8 8 8"/></svg></button>
+    <button type="button" id="lb-next" class="lb-nav lb-next" aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const heroSection = document.getElementById("home");
@@ -1025,6 +1322,49 @@ document.addEventListener("DOMContentLoaded", () => {
         heroObserver.observe(heroSection);
     }
 
+    const rootEl = document.documentElement;
+    const rootStyle = getComputedStyle(rootEl);
+    const navOffset = () => parseFloat(rootStyle.getPropertyValue("--nav-h")) * parseFloat(rootStyle.fontSize);
+    let scrollFrame = null;
+
+    const cancelScrollAnimation = () => {
+        if (scrollFrame !== null) { cancelAnimationFrame(scrollFrame); scrollFrame = null; }
+        rootEl.style.removeProperty("scroll-snap-type");
+        rootEl.style.removeProperty("scroll-behavior");
+    };
+
+    const scrollToElement = (el) => {
+        cancelScrollAnimation();
+        const startY = window.scrollY;
+        const targetY = Math.max(0, Math.round(el.getBoundingClientRect().top + startY - navOffset()));
+        const distance = targetY - startY;
+        if (Math.abs(distance) < 2) return;
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            window.scrollTo(0, targetY);
+            return;
+        }
+
+        rootEl.style.setProperty("scroll-snap-type", "none");   
+        rootEl.style.setProperty("scroll-behavior", "auto");
+        const duration = Math.min(1000, 350 + Math.abs(distance) * 0.15);
+        const t0 = performance.now();
+        const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+        const step = (now) => {
+            const t = Math.min(1, (now - t0) / duration);
+            window.scrollTo(0, startY + distance * ease(t));
+            if (t < 1) {
+                scrollFrame = requestAnimationFrame(step);
+            } else {
+                window.scrollTo(0, targetY);
+                cancelScrollAnimation();                         
+            }
+        };
+        scrollFrame = requestAnimationFrame(step);
+    };
+    ["wheel", "touchstart", "keydown"].forEach((ev) => window.addEventListener(ev, cancelScrollAnimation, { passive: true }));
+
     document.querySelectorAll("[data-scroll]").forEach((link) => {
         link.addEventListener("click", (event) => {
             const href = link.getAttribute("href");
@@ -1035,10 +1375,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             event.preventDefault();
 
-            target.scrollIntoView({
-                behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-                block: "start"
-            });
+            scrollToElement(target);
 
             history.replaceState(null, "", href);
         });
@@ -1117,23 +1454,161 @@ document.addEventListener("DOMContentLoaded", () => {
             videoObserver.observe(video);
         });
     }
-@media (max-width: 767px) {
-    html { scroll-snap-type: y proximity; }   /* a nyitóképek még halkan beugranak */
-    .slide { min-height: 0; padding: 0 0 .25rem; scroll-snap-align: none; }
-    .slide-media { width: 100%; }
-}
-    document.querySelectorAll(".project-details").forEach((details) => {
+
+    const projectDetails = [...document.querySelectorAll(".project-details")];
+
+    const jumpToElement = (el) => {                          
+        cancelScrollAnimation();
+        const y = Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY - navOffset()));
+        rootEl.style.setProperty("scroll-behavior", "auto");
+        window.scrollTo(0, y);
+        requestAnimationFrame(() => rootEl.style.removeProperty("scroll-behavior"));
+    };
+
+    projectDetails.forEach((details) => {
         details.addEventListener("toggle", () => {
             if (details.open) {
-                requestAnimationFrame(() => {
-                    details.scrollIntoView({
-                        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-                        block: "start"
-                    });
-                });
+                const switching = projectDetails.some((o) => o !== details && o.open);
+                projectDetails.forEach((o) => { if (o !== details && o.open) o.open = false; });
+                requestAnimationFrame(() => (switching ? jumpToElement(details) : scrollToElement(details)));
+            } else if (!projectDetails.some((o) => o.open)) {
+                jumpToElement(details);                      
             }
         });
     });
+
+    const lb = document.getElementById("lightbox");
+    const lbTrack = document.getElementById("lb-track");
+    const lbCount = document.getElementById("lb-count");
+    const htmlEl = document.documentElement;
+    let lbPushed = false, lbOpener = null, lbTicking = false;
+
+    const lbIndex = () => Math.round(lbTrack.scrollLeft / Math.max(lbTrack.clientWidth, 1));
+    const lbUpdateCount = () => { lbCount.textContent = (lbIndex() + 1) + " / " + lbTrack.children.length; };
+    const lbResetZoom = () => {
+        lbTrack.querySelectorAll(".zoomed").forEach((i) => i.classList.remove("zoomed"));
+        lb.classList.remove("is-zoomed");
+    };
+
+    const openLightbox = (img) => {
+        const imgs = [...img.closest(".project-content").querySelectorAll("img.slide-media")];
+        lbTrack.replaceChildren(...imgs.map((src) => {
+            const item = document.createElement("div");
+            item.className = "lb-item";
+            const im = new Image();
+            im.src = src.currentSrc || src.src;
+            im.alt = src.alt || "";
+            im.decoding = "async";
+            if (src !== img) im.loading = "lazy";
+            item.appendChild(im);
+            return item;
+        }));
+        lb.hidden = false;                                    
+        htmlEl.classList.add("lb-open");
+        lbTrack.style.scrollBehavior = "auto";
+        lbTrack.scrollLeft = imgs.indexOf(img) * lbTrack.clientWidth;
+        lbTrack.style.scrollBehavior = "";
+        lbUpdateCount();
+        lbTrack.focus({ preventScroll: true });
+        lbOpener = img;
+        history.pushState({ lb: 1 }, "", location.href);      
+        lbPushed = true;
+    };
+
+    const hideLightbox = () => {
+        if (lb.hidden) return;
+        lb.hidden = true;
+        lbTrack.replaceChildren();
+        lbResetZoom();
+        htmlEl.classList.remove("lb-open");
+        lbPushed = false;
+        if (lbOpener) lbOpener.focus({ preventScroll: true });
+    };
+    const closeLightbox = () => {
+        if (lb.hidden) return;
+        if (lbPushed) { lbPushed = false; history.back(); } else { hideLightbox(); }
+    };
+    const lbGo = (dir) => { lbResetZoom(); lbTrack.scrollBy({ left: dir * lbTrack.clientWidth }); };
+
+    document.querySelectorAll(".project-content img.slide-media").forEach((img) => {
+        img.tabIndex = 0;
+        img.setAttribute("role", "button");
+        img.setAttribute("aria-label", "Open full screen: " + (img.alt || "image"));
+        img.addEventListener("click", () => openLightbox(img));
+        img.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(img); }
+        });
+    });
+
+    lbTrack.addEventListener("click", (e) => {
+        const item = e.target.closest(".lb-item");
+        if (!item) return;
+        if (e.target.tagName !== "IMG") {                     
+            if (!item.classList.contains("zoomed")) closeLightbox();
+            return;
+        }
+        const zoomed = item.classList.toggle("zoomed");
+        lb.classList.toggle("is-zoomed", !!lbTrack.querySelector(".zoomed"));
+        if (zoomed) {                                         
+            item.scrollLeft = (item.scrollWidth - item.clientWidth) / 2;
+            item.scrollTop = (item.scrollHeight - item.clientHeight) / 2;
+        }
+    });
+
+    lbTrack.addEventListener("scroll", () => {
+        if (lbTicking) return;
+        lbTicking = true;
+        requestAnimationFrame(() => { lbTicking = false; lbUpdateCount(); });
+    }, { passive: true });
+
+    document.getElementById("lb-close").addEventListener("click", closeLightbox);
+    document.getElementById("lb-prev").addEventListener("click", () => lbGo(-1));
+    document.getElementById("lb-next").addEventListener("click", () => lbGo(1));
+    window.addEventListener("popstate", () => { if (!lb.hidden) { lbPushed = false; hideLightbox(); } });
+    document.addEventListener("keydown", (e) => {
+        if (lb.hidden) return;
+        if (e.key === "Escape") closeLightbox();
+        else if (e.key === "ArrowRight") lbGo(1);
+        else if (e.key === "ArrowLeft") lbGo(-1);
+    });
+     const aboutTrack = document.getElementById("about-track");
+    if (aboutTrack) {
+        const panels = [...aboutTrack.children];
+        const countEl = document.getElementById("about-count");
+        const prevBtn = document.getElementById("about-prev");
+        const nextBtn = document.getElementById("about-next");
+        const dots = [...document.querySelectorAll(".about-dot")];
+        let aboutTick = false;
+
+        const aboutIndex = () => Math.min(panels.length - 1, Math.max(0, Math.round(aboutTrack.scrollLeft / Math.max(aboutTrack.clientWidth, 1))));
+
+        const updateAbout = () => {
+            aboutTick = false;
+            const i = aboutIndex();
+            countEl.textContent = String(i + 1).padStart(2, "0") + " / " + String(panels.length).padStart(2, "0");
+            dots.forEach((d, n) => {
+                d.classList.toggle("is-active", n === i);
+                d.setAttribute("aria-current", n === i ? "true" : "false");
+            });
+            prevBtn.disabled = i === 0;
+            nextBtn.disabled = i === panels.length - 1;
+        };
+
+        const goAbout = (i) => {
+            const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const n = Math.min(panels.length - 1, Math.max(0, i));
+            aboutTrack.scrollTo({ left: n * aboutTrack.clientWidth, behavior: reduce ? "auto" : "smooth" });
+        };
+
+        aboutTrack.addEventListener("scroll", () => {
+            if (!aboutTick) { aboutTick = true; requestAnimationFrame(updateAbout); }
+        }, { passive: true });
+        window.addEventListener("resize", updateAbout);
+        prevBtn.addEventListener("click", () => goAbout(aboutIndex() - 1));
+        nextBtn.addEventListener("click", () => goAbout(aboutIndex() + 1));
+        dots.forEach((d, n) => d.addEventListener("click", () => goAbout(n)));
+        updateAbout();
+    }
 });
 </script>
 </body>
