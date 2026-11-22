@@ -810,6 +810,26 @@ html.lb-open { overflow: hidden; }
 }
 a, button, summary { touch-action: manipulation; }
 
+@media (max-width: 767px) {
+    .hero-intro { display: none; }                         
+
+    .nav-brand.is-hidden {                                 
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .hero-half {                                           
+        align-items: flex-end;
+        justify-content: flex-start;
+        padding: 1.25rem;
+    }
+    .hero-left,
+    .hero-right { justify-content: flex-start; text-align: left; }
+
+    .hero-label { opacity: 1; transform: none; }           
+    .hero-title { font-size: 2rem; }
+    .hero-sub { margin-top: .5rem; font-size: .8125rem; }
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *,
