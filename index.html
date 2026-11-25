@@ -406,26 +406,28 @@ body {
     color: var(--accent);
 }
 .about-top { margin-bottom: .75rem; }
-.about-bottom { margin-top: .75rem; }
 
-.about-arrows { display: flex; gap: .25rem; }
+.about-arrows { display: flex; gap: .25rem; margin-right: -.5rem; }
 .about-arrow {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid currentColor;
     color: inherit;
     transition: opacity .2s;
 }
-.about-arrow:disabled { opacity: .3; cursor: default; }
-.about-arrow svg { width: 1rem; height: 1rem; stroke: currentColor; stroke-width: 3; fill: none; stroke-linecap: square; }
-
-.about-dots { display: flex; }
-.about-dot { width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center; color: inherit; }
-.about-dot::before { content: ""; width: .5rem; height: .5rem; border: 1px solid currentColor; }
-.about-dot.is-active::before { background: var(--accent); border-color: var(--accent); }
+.about-arrow:disabled { opacity: .25; cursor: default; }
+.about-arrow svg {
+    width: 2rem;
+    height: 2rem;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 4;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+}.about-arrow svg { width: 1rem; height: 1rem; stroke: currentColor; stroke-width: 3; fill: none; stroke-linecap: square; }
 
 .about-track {
     flex: 1;
@@ -446,7 +448,7 @@ body {
     scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;               /* ha egy panel mégis magasabb, benne görgethető */
+    overflow-y: auto;               
     padding: 0 1.25rem;
     scrollbar-width: none;
 }
@@ -462,7 +464,7 @@ body {
     letter-spacing: -.02em;
     color: var(--accent);
 }
-.about-title.xl { font-size: clamp(3.5rem, 11vw, 8rem); }   /* az első panelen akkora, mint a Contact címe */
+.about-title.xl { font-size: clamp(3.5rem, 11vw, 8rem); }   
 
 .about-intro { display: grid; gap: 1.25rem; align-items: center; }
 .about-photo { width: 40%; max-width: 12rem; border: 4px solid var(--accent); padding: .5rem; }
@@ -1189,8 +1191,8 @@ a, button, summary { touch-action: manipulation; }
         <div class="about-top">
             <span id="about-count">01 / 05</span>
             <div class="about-arrows">
-                <button type="button" id="about-prev" class="about-arrow" aria-label="Previous"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l-8 8 8 8"/></svg></button>
-                <button type="button" id="about-next" class="about-arrow" aria-label="Next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+                <button type="button" id="about-prev" class="about-arrow" aria-label="Previous"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H8M12 5l-7 7 7 7"/></svg></button>
+                <button type="button" id="about-next" class="about-arrow" aria-label="Next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h11M12 5l7 7-7 7"/></svg></button>
             </div>
         </div>
 
@@ -1263,15 +1265,6 @@ a, button, summary { touch-action: manipulation; }
 
         </div>
 
-        <div class="about-bottom">
-            <div class="about-dots">
-                <button type="button" class="about-dot" aria-label="Go to part 1"></button>
-                <button type="button" class="about-dot" aria-label="Go to part 2"></button>
-                <button type="button" class="about-dot" aria-label="Go to part 3"></button>
-                <button type="button" class="about-dot" aria-label="Go to part 4"></button>
-                <button type="button" class="about-dot" aria-label="Go to part 5"></button>
-            </div>
-        </div>
     </section>
 
     <section id="contact" class="contact-section">
@@ -1591,13 +1584,12 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.key === "ArrowRight") lbGo(1);
         else if (e.key === "ArrowLeft") lbGo(-1);
     });
-     const aboutTrack = document.getElementById("about-track");
+const aboutTrack = document.getElementById("about-track");
     if (aboutTrack) {
         const panels = [...aboutTrack.children];
         const countEl = document.getElementById("about-count");
         const prevBtn = document.getElementById("about-prev");
         const nextBtn = document.getElementById("about-next");
-        const dots = [...document.querySelectorAll(".about-dot")];
         let aboutTick = false;
 
         const aboutIndex = () => Math.min(panels.length - 1, Math.max(0, Math.round(aboutTrack.scrollLeft / Math.max(aboutTrack.clientWidth, 1))));
@@ -1606,10 +1598,6 @@ document.addEventListener("DOMContentLoaded", () => {
             aboutTick = false;
             const i = aboutIndex();
             countEl.textContent = String(i + 1).padStart(2, "0") + " / " + String(panels.length).padStart(2, "0");
-            dots.forEach((d, n) => {
-                d.classList.toggle("is-active", n === i);
-                d.setAttribute("aria-current", n === i ? "true" : "false");
-            });
             prevBtn.disabled = i === 0;
             nextBtn.disabled = i === panels.length - 1;
         };
@@ -1626,7 +1614,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("resize", updateAbout);
         prevBtn.addEventListener("click", () => goAbout(aboutIndex() - 1));
         nextBtn.addEventListener("click", () => goAbout(aboutIndex() + 1));
-        dots.forEach((d, n) => d.addEventListener("click", () => goAbout(n)));
         updateAbout();
     }
 });
